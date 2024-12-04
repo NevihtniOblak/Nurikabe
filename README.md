@@ -33,3 +33,14 @@ Useful Gradle tasks and flags:
 
 Note that most tasks that are not specific to a single project can be run with `name:` prefix, where the `name` should be replaced with the ID of a specific project.
 For example, `core:clean` removes `build` folder only from the `core` project.
+
+# PREDSTAVITEV IGRE
+
+## DINAMIKA
+Igramo na mreži, kjer jo moramo razdeliti na otoke (bele celice z piko) in morje (črne celice). Otoki so sestavljeni iz belih celic, povezanih horizontalno ali vertikalno, in vsak otok vsebuje točno eno številko, ki označuje skupno število celic otoka. Črne celice morajo tvoriti eno samo povezano skupino, brez ločenih delov, in ne smejo tvoriti kvadrata velikosti 2x2 ali več. Otoki se med seboj ne smejo dotikati po robovih. Igra se konča, ko igralec določi vsako polje.
+
+## MEHANIKA
+Z desnim klikom na neko polje ga označimo kot črno celico, z levim klikom pa kot belo polje z pikico.
+
+## ELEMENTI
+Igralna površina (mreža), črn kvadrat, bel kvadrat z piko, števec časa
