@@ -15,6 +15,21 @@ public class AssetPaths {
 
     public static final String PUT_DOT_SOUND = "assets/sounds/put_pika.mp3";
 
+    //UI STUFF
+    //public static final String UI_FONT = "C:\\Users\\Flex\\Documents\\Programming\\FERI\\Vaje\\vaje3L\\1.semester\\RRI\\boardGame\\assets\\ui\\font-export.fnt";
+
+    //public static final String UI_SKIN = "C:\\Users\\Flex\\Documents\\Programming\\FERI\\Vaje\\vaje3L\\1.semester\\RRI\\boardGame\\assets\\ui\\clean-crispy-ui.json";
+
+    //public static final String UI_ATLAS = "C:\\Users\\Flex\\Documents\\Programming\\FERI\\Vaje\\vaje3L\\1.semester\\RRI\\boardGame\\assets\\ui\\clean-crispy-ui.atlas";
+
+    public static final String UI_FONT = "assets/ui/font-export.fnt";
+
+    public static final String UI_SKIN = "assets/ui/clean-crispy-ui.json";
+
+    public static final String UI_ATLAS = "assets/ui/clean-crispy-ui.atlas";
+
+
+
 
     private AssetPaths(){
 

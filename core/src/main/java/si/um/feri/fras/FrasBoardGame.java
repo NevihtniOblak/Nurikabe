@@ -1,6 +1,7 @@
 package si.um.feri.fras;
 
 import com.badlogic.gdx.ApplicationAdapter;
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetDescriptor;
 import com.badlogic.gdx.assets.AssetManager;
@@ -15,9 +16,10 @@ import com.badlogic.gdx.utils.ScreenUtils;
 
 import si.um.feri.fras.assets.AssetDescriptors;
 import si.um.feri.fras.assets.RegionNames;
+import si.um.feri.fras.screen.IntroScreen;
 
 /** {@link com.badlogic.gdx.ApplicationListener} implementation shared by all platforms. */
-public class FrasBoardGame extends ApplicationAdapter {
+public class FrasBoardGame extends Game {
     private SpriteBatch batch;
 
     private AssetManager assetManager;
@@ -95,7 +97,7 @@ public class FrasBoardGame extends ApplicationAdapter {
         putBlackSound = assetManager.get(AssetDescriptors.PUT_BLACK_SOUND);
         putDotSound = assetManager.get(AssetDescriptors.PUT_DOT_SOUND);
 
-
+        setScreen(new IntroScreen(this));
     }
 
     @Override
@@ -110,5 +112,13 @@ public class FrasBoardGame extends ApplicationAdapter {
     public void dispose() {
         batch.dispose();
         assetManager.dispose();
+    }
+
+    public AssetManager getAssetManager() {
+        return assetManager;
+    }
+
+    public SpriteBatch getBatch() {
+        return batch;
     }
 }
