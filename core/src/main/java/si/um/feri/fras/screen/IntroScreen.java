@@ -11,6 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.badlogic.gdx.scenes.scene2d.ui.Container;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.utils.viewport.FitViewport;
@@ -122,23 +123,31 @@ public class IntroScreen extends ScreenAdapter {
         Label letterR = new Label("R", labelStyle);
 
         float letterN_positionX_initial = 100f;
-        float letterN_positionY_initial = viewport.getWorldHeight() + letterN.getHeight();
+        float letterN_positionY_initial = viewport.getWorldHeight() + 100f;
         float letterU_positionX_initial = 200f;
-        float letterU_positionY_initial = viewport.getWorldHeight() + letterU.getHeight();
+        float letterU_positionY_initial = viewport.getWorldHeight() + 100f;
         float letterR_positionX_initial = 300f;
-        float letterR_positionY_initial = viewport.getWorldHeight() + letterR.getHeight();
+        float letterR_positionY_initial = viewport.getWorldHeight() + 100f;
 
         float letterN_positionX_final = firstLetterPositionX;
         float letterU_positionX_final = firstLetterPositionX + letterN.getWidth() + letterSpacing;
         float letterR_positionX_final = firstLetterPositionX + letterN.getWidth() + letterU.getWidth() + 2 * letterSpacing;
+        letterPositionY_final = letterPositionY_final + letterN.getHeight();
 
-        // Position "N" and "U" in the center
-        letterN.setPosition(letterN_positionX_initial, letterN_positionY_initial);
-        letterN.setScale(10f);
-        letterU.setPosition(letterU_positionX_initial, letterU_positionY_initial);
-        letterU.setScale(3f);
-        letterR.setPosition(letterR_positionX_initial, letterR_positionY_initial);
-        letterR.setScale(3f);
+        Container<Label> letterN_container = new Container<>(letterN);
+        letterN_container.setTransform(true); // Enable scaling and rotation
+        letterN_container.setPosition(letterN_positionX_initial, letterN_positionY_initial);
+        letterN_container.setScale(3f); // Initial scale
+
+        Container<Label> letterU_container = new Container<>(letterU);
+        letterU_container.setTransform(true); // Enable scaling and rotation
+        letterU_container.setPosition(letterU_positionX_initial, letterU_positionY_initial);
+        letterU_container.setScale(3f); // Initial scale
+
+        Container<Label> letterR_container = new Container<>(letterR);
+        letterR_container.setTransform(true); // Enable scaling and rotation
+        letterR_container.setPosition(letterR_positionX_initial, letterR_positionY_initial);
+        letterR_container.setScale(3f); // Initial scale
 
         Group remainingLetters = new Group();
         String remainingText = "IKABE";
@@ -151,30 +160,30 @@ public class IntroScreen extends ScreenAdapter {
         }
 
         // Adjust the position of the remaining letters group
-        remainingLetters.setPosition( letterR_positionX_final + letterR.getWidth() + letterSpacing, letterPositionY_final);
+        remainingLetters.setPosition( letterR_positionX_final + letterR.getWidth()/2f + letterSpacing, letterPositionY_final - letterN.getHeight()/2f);
         remainingLetters.setVisible(false);
 
-        // Create animation sequences for "N", "U", and "RIKABE"
-        letterN.addAction(Actions.sequence(
+
+        letterN_container.addAction(Actions.sequence(
             Actions.parallel(
-                Actions.moveTo(letterN_positionX_final, letterPositionY_final, 1f, Interpolation.smooth), // Move to final position
-                Actions.scaleTo(1f, 1f, 1f, Interpolation.smooth) // Shrink to final size
+                Actions.moveTo(letterN_positionX_final, letterPositionY_final, 0.7f, Interpolation.smooth), // Move to final position
+                Actions.scaleTo(1f, 1f, 0.7f, Interpolation.smooth) // Shrink to final size
             )
         ));
 
-        letterU.addAction(Actions.sequence(
+        letterU_container.addAction(Actions.sequence(
             Actions.delay(0.5f),
             Actions.parallel(
-                Actions.moveTo(letterU_positionX_final, letterPositionY_final, 1f, Interpolation.smooth), // Move to final position
-                Actions.scaleTo(1f, 1f, 1f, Interpolation.smooth) // Shrink to final size
+                Actions.moveTo(letterU_positionX_final, letterPositionY_final, 0.7f, Interpolation.smooth), // Move to final position
+                Actions.scaleTo(1f, 1f, 0.7f, Interpolation.smooth) // Shrink to final size
             )
         ));
 
-        letterR.addAction(Actions.sequence(
+        letterR_container.addAction(Actions.sequence(
             Actions.delay(1f),
             Actions.parallel(
-                Actions.moveTo(letterR_positionX_final, letterPositionY_final, 1f, Interpolation.smooth), // Move to final position
-                Actions.scaleTo(1f, 1f, 1f, Interpolation.smooth) // Shrink to final size
+                Actions.moveTo(letterR_positionX_final, letterPositionY_final, 0.7f, Interpolation.smooth), // Move to final position
+                Actions.scaleTo(1f, 1f, 0.7f, Interpolation.smooth) // Shrink to final size
             )
         ));
 
@@ -197,9 +206,9 @@ public class IntroScreen extends ScreenAdapter {
         Group animationGroup = new Group();
         animationGroup.addActor(tileWhiteImage); // Add the tileWhite image first
         animationGroup.addActor(tileBlackImage); // Add the tileBlack image second
-        animationGroup.addActor(letterN);
-        animationGroup.addActor(letterU);
-        animationGroup.addActor(letterR);
+        animationGroup.addActor(letterN_container);;
+        animationGroup.addActor(letterU_container);
+        animationGroup.addActor(letterR_container);
         animationGroup.addActor(remainingLetters);
 
         return animationGroup;
