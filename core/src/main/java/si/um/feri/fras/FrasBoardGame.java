@@ -71,6 +71,10 @@ public class FrasBoardGame extends Game {
         assetManager.load(AssetDescriptors.PUT_BLACK_SOUND);
         assetManager.load(AssetDescriptors.PUT_DOT_SOUND);
 
+        assetManager.load(AssetDescriptors.UI_FONT);
+        assetManager.load(AssetDescriptors.UI_SKIN);
+        assetManager.load(AssetDescriptors.UI_ATLAS);
+
         assetManager.finishLoading();
 
         // Initialize variables with loaded assets
@@ -100,13 +104,6 @@ public class FrasBoardGame extends Game {
         setScreen(new IntroScreen(this));
     }
 
-    @Override
-    public void render() {
-        ScreenUtils.clear(0.15f, 0.15f, 0.2f, 1f);
-        batch.begin();
-        batch.draw(tileMarked, 140, 210);
-        batch.end();
-    }
 
     @Override
     public void dispose() {
