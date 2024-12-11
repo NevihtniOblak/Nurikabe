@@ -188,7 +188,7 @@ public class IntroScreen extends ScreenAdapter {
         ));
 
         remainingLetters.addAction(Actions.sequence(
-            Actions.delay(2.5f),
+            Actions.delay(2f),
             Actions.run(() -> {
                 for (Actor letter : remainingLetters.getChildren()) {
                     ((Label) letter).setStyle(new Label.LabelStyle(font, Color.WHITE));
@@ -211,8 +211,13 @@ public class IntroScreen extends ScreenAdapter {
         animationGroup.addActor(letterR_container);
         animationGroup.addActor(remainingLetters);
 
+        // Add fade-out action to lower opacity
+        animationGroup.addAction(Actions.sequence(
+            Actions.delay(3.5f), // Delay before starting the fade-out (adjust based on your animation timing)
+            Actions.fadeOut(1f) // Gradually lower opacity over 1 second
+        ));
+
         return animationGroup;
     }
-
 
 }

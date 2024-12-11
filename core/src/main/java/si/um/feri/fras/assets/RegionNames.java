@@ -17,7 +17,11 @@ public class RegionNames {
     public static final String TILE_MARKED = "marked";
     public static final String TILE_WHITE = "white";
     public static final String TILE_NEUTRAL = "neutral";
+    public static final String BAMBOO_BACKGROUND = "bambooBackground";
 
+    public static final String ALPHA_BACKGROUND = "alphaBackground";
+
+    public static final String DARK_BAMBOO_BACKGROUND = "darkBambooBackground";
     private RegionNames() {
     }
 }
