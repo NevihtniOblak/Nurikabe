@@ -26,7 +26,7 @@ import com.badlogic.gdx.utils.ScreenUtils;
 
 public class IntroScreen extends ScreenAdapter {
 
-    public static final float INTRO_DURATION= 4f;   // duration of the (intro) animation
+    public static final float INTRO_DURATION= 3.5f;   // duration of the (intro) animation
 
     private final FrasBoardGame game;
     private final AssetManager assetManager;
@@ -54,15 +54,15 @@ public class IntroScreen extends ScreenAdapter {
         viewport = new FitViewport(GameConfig.HUD_WIDTH, GameConfig.HUD_HEIGHT);
         stage = new Stage(viewport, game.getBatch());
 
-        uiAtlas = assetManager.get(AssetDescriptors.UI_ATLAS);
-        //TODO Get better font
-        font = assetManager.get(AssetDescriptors.PRIMARY_FONT);
+        uiAtlas = game.getUiAtlas();
+        font = assetManager.get(AssetDescriptors.INTRO_FONT);
         font.getData().setScale(2.0f);
 
         TextureAtlas gameAtlas = assetManager.get(AssetDescriptors.GAME_ATLAS);
         tileBlack = gameAtlas.findRegion(RegionNames.TILE_BLACK);
         tileWhite = gameAtlas.findRegion(RegionNames.TILE_WHITE);
 
+        //Init the stage
         stage.addActor(createLetterAnimation());
     }
 
@@ -74,10 +74,9 @@ public class IntroScreen extends ScreenAdapter {
     @Override
     public void render(float delta) {
         ScreenUtils.clear(Color.BLACK);
-
+        //play intro animation
         duration += delta;
 
-        // go to the MenuScreen after INTRO_DURATION_IN_SEC seconds
         if (duration > INTRO_DURATION) {
             game.setScreen(new MenuScreen(game));
         }
@@ -98,20 +97,19 @@ public class IntroScreen extends ScreenAdapter {
 
 
     private Actor createLetterAnimation() {
-        // Get your main font from the AssetManager
         float centerX = viewport.getWorldWidth() / 2f;
         float centerY = viewport.getWorldHeight() / 2f;
-
-        float firstLetterPositionX = centerX - 150f;
+        float firstLetterPositionX = centerX - 200f;
         float letterPositionY_final = centerY;
         float letterSpacing = 10f; // Fixed spacing between letters
 
-        // Create the background actors
+        //BlackImage actor
         Image tileBlackImage = new Image(tileBlack);
         tileBlackImage.setSize(viewport.getWorldWidth(), viewport.getWorldHeight());
         tileBlackImage.setPosition(0, 0);
         tileBlackImage.setVisible(false); // Initially hidden
 
+        //WhiteImage actor
         Image tileWhiteImage = new Image(tileWhite);
         tileWhiteImage.setSize(viewport.getWorldWidth(), viewport.getWorldHeight());
         tileWhiteImage.setPosition(0, 0);
@@ -219,5 +217,8 @@ public class IntroScreen extends ScreenAdapter {
 
         return animationGroup;
     }
+
+
+
 
 }

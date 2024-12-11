@@ -3,6 +3,7 @@ package si.um.feri.fras.screen;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -83,13 +84,15 @@ public class MenuScreen extends ScreenAdapter {
         TextureRegion backgroundRegion = gameplayAtlas.findRegion(RegionNames.BAMBOO_BACKGROUND);
         table.setBackground(new TextureRegionDrawable(backgroundRegion));
 
-        TextButton introButton = new TextButton("Intro screen", skin);
+        /*TextButton introButton = new TextButton("Intro screen", skin);
         introButton.addListener(new ClickListener() {
              @Override
              public void clicked(InputEvent event, float x, float y) {
                  game.setScreen(new IntroScreen(game));
              }
          });
+
+         */
 
 
         TextButton playButton = new TextButton("Play", skin);
@@ -134,13 +137,19 @@ public class MenuScreen extends ScreenAdapter {
         //TextureRegion menuBackgroundRegion = gameplayAtlas.findRegion(RegionNames.MENU_BACKGROUND);
         //buttonTable.setBackground(new TextureRegionDrawable(menuBackgroundRegion));
 
-        buttonTable.add(introButton).padBottom(15).expandX().fillX().row();
-        buttonTable.add(playButton).padBottom(15).expandX().fill().row();
-        buttonTable.add(leaderboardButton).padBottom(15).fillX().row();
-        buttonTable.add(settingsButton).padBottom(15).fillX().row();
-        buttonTable.add(quitButton).fillX();
+        BitmapFont customFont = skin.getFont("font");
+        customFont.getData().setScale(1.2f);
+
+        float buttonWidth = 150f;
+        float buttonHeight = 50f;
+        //buttonTable.add(introButton).padBottom(15).expandX().fillX().row();
+        buttonTable.add(playButton).padBottom(15).expandX().fill().size(buttonWidth, buttonHeight).row();
+        buttonTable.add(leaderboardButton).padBottom(15).fillX().size(buttonWidth, buttonHeight).row();
+        buttonTable.add(settingsButton).padBottom(15).fillX().size(buttonWidth, buttonHeight).row();
+        buttonTable.add(quitButton).size(buttonWidth, buttonHeight).fillX();
 
         buttonTable.center();
+
 
         table.add(buttonTable);
         table.center();

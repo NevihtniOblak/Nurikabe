@@ -6,7 +6,7 @@ public class AssetPaths {
     public static final String GAME_ATLAS = "assets/atlases/nurikabeAtlas/nurikabe.atlas";
 
     //FONTS
-    public static final String PRIMARY_FONT = "assets/fonts/customFont.fnt";
+    public static final String PRIMARY_FONT = "assets/ui/customFont.fnt";
 
     //SOUNDS
     public static final String LEVEL_COMPLETE_SOUND = "assets/sounds/levelcomplete.mp3";
@@ -27,6 +27,9 @@ public class AssetPaths {
     public static final String UI_SKIN = "assets/ui/clean-crispy-ui.json";
 
     public static final String UI_ATLAS = "assets/ui/clean-crispy-ui.atlas";
+
+
+    public static final String INTRO_FONT = "assets/fonts/intro.fnt";
 
 
 

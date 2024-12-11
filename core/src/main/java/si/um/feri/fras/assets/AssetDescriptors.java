@@ -38,6 +38,10 @@ public class AssetDescriptors {
         new AssetDescriptor<TextureAtlas>(AssetPaths.UI_ATLAS, TextureAtlas.class);
 
 
+    public static final AssetDescriptor<BitmapFont> INTRO_FONT =
+        new AssetDescriptor<BitmapFont>(AssetPaths.INTRO_FONT, BitmapFont.class);
+
+
     private AssetDescriptors() {
     }
 }

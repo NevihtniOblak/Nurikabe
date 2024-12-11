@@ -26,33 +26,9 @@ public class FrasBoardGame extends Game {
 
     private TextureAtlas gameAtlas;
 
+    private TextureAtlas uiAtlas;
+
     private BitmapFont font;
-
-    private TextureRegion tile1;
-
-    private TextureRegion tile2;
-
-    private TextureRegion tile3;
-
-    private TextureRegion tile4;
-
-    private TextureRegion tile5;
-
-    private TextureRegion tile6;
-
-    private TextureRegion tile7;
-
-    private TextureRegion tile8;
-
-    private TextureRegion tile9;
-
-    private TextureRegion tile10;
-
-    private TextureRegion tileBlack;
-
-    private TextureRegion tileMarked;
-
-    private TextureRegion tileWhite;
 
     private Sound levelCompleteSound;
 
@@ -64,24 +40,29 @@ public class FrasBoardGame extends Game {
     public void create() {
         batch = new SpriteBatch();
 
+        //load all assets into AssetManager
         assetManager = new AssetManager();
         assetManager.load(AssetDescriptors.GAME_ATLAS);
         assetManager.load(AssetDescriptors.PRIMARY_FONT);
         assetManager.load(AssetDescriptors.LEVEL_COMPLETE_SOUND);
         assetManager.load(AssetDescriptors.PUT_BLACK_SOUND);
         assetManager.load(AssetDescriptors.PUT_DOT_SOUND);
-
+        assetManager.load(AssetDescriptors.INTRO_FONT);
         assetManager.load(AssetDescriptors.UI_FONT);
         assetManager.load(AssetDescriptors.UI_SKIN);
         assetManager.load(AssetDescriptors.UI_ATLAS);
 
         assetManager.finishLoading();
 
+        //Asset loading demo
+
         // Initialize variables with loaded assets
         gameAtlas = assetManager.get(AssetDescriptors.GAME_ATLAS);
+        uiAtlas = assetManager.get(AssetDescriptors.UI_ATLAS);
         font = assetManager.get(AssetDescriptors.PRIMARY_FONT);
 
         //TEXTURES
+        /*
         tile1 = gameAtlas.findRegion(RegionNames.TILE_1);
         tile2 = gameAtlas.findRegion(RegionNames.TILE_2);
         tile3 = gameAtlas.findRegion(RegionNames.TILE_3);
@@ -95,11 +76,15 @@ public class FrasBoardGame extends Game {
         tileBlack = gameAtlas.findRegion(RegionNames.TILE_BLACK);
         tileMarked = gameAtlas.findRegion(RegionNames.TILE_MARKED);
         tileWhite = gameAtlas.findRegion(RegionNames.TILE_WHITE);
+        */
+
 
         //SOUNDS
         levelCompleteSound = assetManager.get(AssetDescriptors.LEVEL_COMPLETE_SOUND);
         putBlackSound = assetManager.get(AssetDescriptors.PUT_BLACK_SOUND);
         putDotSound = assetManager.get(AssetDescriptors.PUT_DOT_SOUND);
+
+
 
         setScreen(new IntroScreen(this));
     }
@@ -117,5 +102,13 @@ public class FrasBoardGame extends Game {
 
     public SpriteBatch getBatch() {
         return batch;
+    }
+
+    public TextureAtlas getGameAtlas() {
+        return gameAtlas;
+    }
+
+    public TextureAtlas getUiAtlas() {
+        return uiAtlas;
     }
 }

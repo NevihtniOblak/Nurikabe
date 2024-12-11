@@ -4,11 +4,13 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -102,7 +104,7 @@ public class LeaderboardScreen extends ScreenAdapter {
             }
         });
 
-        mainTable.add(backButton).padTop(20).bottom();
+        mainTable.add(backButton).size(120,40).padTop(20).bottom();
 
         return mainTable;
     }
@@ -113,12 +115,14 @@ public class LeaderboardScreen extends ScreenAdapter {
         leaderboardTable.pad(20); // Padding around the outer edges of the table
         leaderboardTable.top();
 
-        // Set a semi-transparent dark background
         TextureRegion backgroundRegion = gameplayAtlas.findRegion(RegionNames.ALPHA_BACKGROUND);
         TextureRegionDrawable backgroundDrawable = new TextureRegionDrawable(backgroundRegion);
         backgroundDrawable.setMinWidth(GameConfig.HUD_WIDTH);
         backgroundDrawable.setMinHeight(GameConfig.HUD_HEIGHT);
         leaderboardTable.setBackground(backgroundDrawable.tint(new Color(0, 0, 0, 1f)));
+
+        BitmapFont customFont = skin.getFont("font-custom");
+        customFont.getData().setScale(0.5f);
 
         // Add header row
         leaderboardTable.add(new Label("Rank", skin)).padRight(20);
@@ -126,7 +130,7 @@ public class LeaderboardScreen extends ScreenAdapter {
         leaderboardTable.add(new Label("Score", skin)).row();
 
         // Add sample leaderboard entries
-        for (int i = 1; i <= 20; i++) { // Increased to 20 for demonstration
+        for (int i = 1; i <= 20; i++) {
             leaderboardTable.add(new Label(String.valueOf(i), skin)).padRight(20);
             leaderboardTable.add(new Label("Player " + i, skin)).padRight(20);
             leaderboardTable.add(new Label(String.valueOf(1000 - i * 10), skin)).padBottom(10).row();
@@ -134,14 +138,16 @@ public class LeaderboardScreen extends ScreenAdapter {
 
         // Create a ScrollPane to make the leaderboard scrollable
         ScrollPane scrollPane = new ScrollPane(leaderboardTable);
-        scrollPane.setFadeScrollBars(false); // Disable fade effect on scroll bars
-        scrollPane.setOverscroll(false, false); // Disable overscroll bounce
-        scrollPane.setForceScroll(false, true); // Ensure vertical scrolling is enabled
+        scrollPane.setFadeScrollBars(false);
+        scrollPane.setOverscroll(false, false);
+        scrollPane.setForceScroll(false, true);
+        scrollPane.setTouchable(Touchable.enabled);
+        scrollPane.setScrollingDisabled(true, false);
 
         // Create a container table to hold the ScrollPane
         Table container = new Table();
         container.setBackground(backgroundDrawable);
-        container.add(scrollPane).expand().fill(); // Make ScrollPane fill the container
+        container.add(scrollPane).expand().fill();
 
         return container;
     }

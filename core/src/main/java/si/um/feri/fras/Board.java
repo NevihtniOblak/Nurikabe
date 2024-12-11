@@ -22,14 +22,11 @@ public class Board extends Actor {
         this.cellSize = cellSize;
         this.gameplayAtlas = gameplayAtlas;
 
-        // Initialize the 2D array for cell states
         cellStates = new int[rows][cols];
 
-        // Example: Get a texture region from the gameplayAtlas (adjust the name as needed)
         //TODO Posodobi at some point
         cellTexture = gameplayAtlas.findRegion(RegionNames.TILE_NEUTRAL);
 
-        // Set the size of the actor
         setWidth(cols * cellSize);
         setHeight(rows * cellSize);
     }
@@ -48,10 +45,11 @@ public class Board extends Actor {
         }
     }
 
-    // Getter for the 2D array
     public int[][] getCellStates() {
         return cellStates;
     }
+
+
 
 }
 
