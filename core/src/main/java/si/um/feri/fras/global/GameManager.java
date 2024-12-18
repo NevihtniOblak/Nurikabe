@@ -10,12 +10,23 @@ public class GameManager {
     public static final GameManager INSTANCE = new GameManager();
     private static final String GRID_SIZE_KEY = "gridSize";
     private static final String DIFFICULTY_KEY = "difficulty";
+
+    private static final String MUSIC_ENABLED_KEY = "musicEnabled";
+
+    private static final boolean DEFAULT_MUSIC_ENABLED = true;
+    private static final boolean DEFAULT_SOUND_EFFECTS_ENABLED = true;
+
+    private static final String SOUND_EFFECTS_ENABLED_KEY = "soundEffectsEnabled";
     private static final int DEFAULT_GRID_SIZE = 7;
     private static final String DEFAULT_DIFFICULTY = "Normal";
 
     private final Preferences PREFS;
     private int gridSize;
     private Difficulty difficulty;
+
+    private boolean musicEnabled;
+
+    private boolean soundEffectsEnabled;
 
     private ArrayList<Result> results = new ArrayList<>();;
 
@@ -28,6 +39,10 @@ public class GameManager {
         // Load difficulty or set to default
         String difficultyStr = PREFS.getString(DIFFICULTY_KEY, DEFAULT_DIFFICULTY);
         difficulty = Difficulty.fromString(difficultyStr);
+
+        musicEnabled = PREFS.getBoolean(MUSIC_ENABLED_KEY, DEFAULT_MUSIC_ENABLED);
+        soundEffectsEnabled = PREFS.getBoolean(SOUND_EFFECTS_ENABLED_KEY, DEFAULT_SOUND_EFFECTS_ENABLED);
+
     }
 
     public int getGridSize() {
@@ -61,6 +76,26 @@ public class GameManager {
 
     public ArrayList<Result> getResults(){
         return results;
+    }
+
+    public boolean isMusicEnabled() {
+        return musicEnabled;
+    }
+
+    public boolean areSoundEffectsEnabled() {
+        return soundEffectsEnabled;
+    }
+
+    public void setMusicEnabled(boolean musicEnabled){
+        this.musicEnabled = musicEnabled;
+        PREFS.putBoolean(MUSIC_ENABLED_KEY, musicEnabled);
+        PREFS.flush();
+    }
+
+    public void setSoundEffectsEnabled(boolean soundEffectsEnabled){
+        this.soundEffectsEnabled = soundEffectsEnabled;
+        PREFS.putBoolean(SOUND_EFFECTS_ENABLED_KEY, soundEffectsEnabled);
+        PREFS.flush();
     }
 }
 
