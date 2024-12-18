@@ -12,6 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ButtonGroup;
 import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.SelectBox;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
@@ -25,6 +26,7 @@ import si.um.feri.fras.FrasBoardGame;
 import si.um.feri.fras.assets.AssetDescriptors;
 import si.um.feri.fras.assets.RegionNames;
 import si.um.feri.fras.config.GameConfig;
+import si.um.feri.fras.global.Difficulty;
 import si.um.feri.fras.global.GameManager;
 
 public class SettingsScreen extends ScreenAdapter {
@@ -96,6 +98,9 @@ public class SettingsScreen extends ScreenAdapter {
         TextButton upButton = new TextButton("▲", uiSkin);
         TextButton downButton = new TextButton("▼", uiSkin);
 
+
+
+
         // Up button listener
         upButton.addListener(new ClickListener() {
             @Override
@@ -118,19 +123,38 @@ public class SettingsScreen extends ScreenAdapter {
             }
         });
 
+
+        // Difficulty Label
+        Label difficultyLabel = new Label("Difficulty:", uiSkin);
+
+// SelectBox for difficulty
+        SelectBox<String> difficultySelectBox = new SelectBox<>(uiSkin);
+        difficultySelectBox.setItems("Easy", "Normal", "Hard");
+
+// Set the default selection to the current difficulty from GameManager
+        difficultySelectBox.setSelected(Difficulty.toString(GameManager.INSTANCE.getDifficulty()));
+
+
         // Apply Button
         TextButton applyButton = new TextButton("Apply", uiSkin);
         applyButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                int selectedGridSize = Integer.parseInt(gridSizeValueLabel.getText().toString());
-                Preferences preferences = Gdx.app.getPreferences("GameSettings");
-                preferences.putInteger("gridSize", selectedGridSize);
-                preferences.flush();
 
-                // You can call GameManager here if needed to apply the changes in real-time.
+                int selectedGridSize = Integer.parseInt(gridSizeValueLabel.getText().toString());
+                String selectedDifficulty = difficultySelectBox.getSelected();
+                Difficulty difficulty = Difficulty.fromString(selectedDifficulty);
+
+                // Use GameManager to save the grid size and difficulty
+                GameManager.INSTANCE.setGridSize(selectedGridSize);
+                GameManager.INSTANCE.setDifficulty(difficulty);
+
+                // Optional: Add logic to update the game in real-time if necessary
+                System.out.println("Grid size updated to: " + selectedGridSize);
+                System.out.println("Difficulty updated to: " + selectedDifficulty);
             }
         });
+
 
         // Back Button
         TextButton backButton = new TextButton("Back", uiSkin);
@@ -156,6 +180,10 @@ public class SettingsScreen extends ScreenAdapter {
         contentTable.add(new Label("Settings", uiSkin)).padBottom(50).colspan(2).row();
         contentTable.add(gridSizeLabel).padBottom(20).colspan(2).row();
         contentTable.add(spinnerTable).padBottom(50).colspan(2).row();
+
+        contentTable.add(difficultyLabel).padBottom(20).colspan(2).row();
+        contentTable.add(difficultySelectBox).padBottom(50).colspan(2).row();
+
         contentTable.add(applyButton).width(100).padBottom(20).colspan(2).row();
         contentTable.add(backButton).width(100).colspan(2);
 
