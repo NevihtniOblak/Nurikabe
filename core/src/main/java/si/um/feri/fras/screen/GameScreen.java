@@ -21,6 +21,7 @@ import si.um.feri.fras.Board;
 import si.um.feri.fras.FrasBoardGame;
 import si.um.feri.fras.assets.AssetDescriptors;
 import si.um.feri.fras.config.GameConfig;
+import si.um.feri.fras.global.GameManager;
 
 public class GameScreen extends ScreenAdapter {
 
@@ -105,7 +106,7 @@ public class GameScreen extends ScreenAdapter {
     private Table createGrid() {
         Table table = new Table();
         table.setFillParent(true);
-        Board board = new Board(10, 10, 3f, gameplayAtlas);
+        Board board = new Board(GameManager.INSTANCE.getGridSize(), GameManager.INSTANCE.getGridSize(), 5f, gameplayAtlas);
 
         table.add(board)
             .pad(20)

@@ -88,17 +88,15 @@ public class SettingsScreen extends ScreenAdapter {
         TextureRegion backgroundRegion = gameplayAtlas.findRegion(RegionNames.BAMBOO_BACKGROUND);
         table.setBackground(new TextureRegionDrawable(backgroundRegion));
 
+
         // Grid Size Label
         Label gridSizeLabel = new Label("Grid Size:", uiSkin);
-
         // Spinner for grid size (up/down arrows)
         final int minGridSize = 5;
         final int maxGridSize = 10;
         final Label gridSizeValueLabel = new Label(String.valueOf(GameManager.INSTANCE.getGridSize()), uiSkin);
         TextButton upButton = new TextButton("▲", uiSkin);
         TextButton downButton = new TextButton("▼", uiSkin);
-
-
 
 
         // Up button listener
@@ -123,15 +121,10 @@ public class SettingsScreen extends ScreenAdapter {
             }
         });
 
-
-        // Difficulty Label
+        //Difficulity label
         Label difficultyLabel = new Label("Difficulty:", uiSkin);
-
-// SelectBox for difficulty
         SelectBox<String> difficultySelectBox = new SelectBox<>(uiSkin);
         difficultySelectBox.setItems("Easy", "Normal", "Hard");
-
-// Set the default selection to the current difficulty from GameManager
         difficultySelectBox.setSelected(Difficulty.toString(GameManager.INSTANCE.getDifficulty()));
 
 
@@ -165,6 +158,8 @@ public class SettingsScreen extends ScreenAdapter {
             }
         });
 
+
+
         // Table layout for the spinner
         Table spinnerTable = new Table();
         spinnerTable.add(downButton).padRight(10);
@@ -173,9 +168,6 @@ public class SettingsScreen extends ScreenAdapter {
 
         // Content Table
         Table contentTable = new Table(uiSkin);
-
-        TextureRegion menuBackground = gameplayAtlas.findRegion(RegionNames.BAMBOO_BACKGROUND);
-        contentTable.setBackground(new TextureRegionDrawable(menuBackground));
 
         contentTable.add(new Label("Settings", uiSkin)).padBottom(50).colspan(2).row();
         contentTable.add(gridSizeLabel).padBottom(20).colspan(2).row();

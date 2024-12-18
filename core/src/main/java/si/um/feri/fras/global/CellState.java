@@ -1,3 +1,3 @@
 package si.um.feri.fras.global;
 
-public enum CellState {BLACK, NEUTRAL, DOT}
+public enum CellState {BLACK, NEUTRAL, MARKED}
