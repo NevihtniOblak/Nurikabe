@@ -5,22 +5,21 @@ public class Result {
     public Difficulty difficulty;
     public int boardSize;
 
-    float K = -37/9000f;
-    float N = 1111/150f;
+    public float K = -37/9000f;
+    public float N = 1111/150f;
 
-    Result(int time, Difficulty difficulty, int boardSize){
+    // No-argument constructor with default values
+    public Result() {
+        this.time = 0; // Default value for time
+        this.difficulty = Difficulty.NORMAL; // Default difficulty (assuming Difficulty is an enum)
+        this.boardSize = 7; // Default value for boardSize
+    }
+
+    // Constructor with arguments
+    Result(int time, Difficulty difficulty, int boardSize) {
         this.time = time;
         this.difficulty = difficulty;
         this.boardSize = boardSize;
-    }
-
-    @Override
-    public String toString() {
-        return "Result{" +
-            "time=" + time +
-            ", difficulty=" + difficulty +
-            ", boardSize=" + boardSize +
-            '}';
     }
 
 

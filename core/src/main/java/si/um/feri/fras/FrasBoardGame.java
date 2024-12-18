@@ -16,6 +16,7 @@ import com.badlogic.gdx.utils.ScreenUtils;
 
 import si.um.feri.fras.assets.AssetDescriptors;
 import si.um.feri.fras.assets.RegionNames;
+import si.um.feri.fras.global.GameManager;
 import si.um.feri.fras.screen.IntroScreen;
 
 /** {@link com.badlogic.gdx.ApplicationListener} implementation shared by all platforms. */
@@ -92,6 +93,7 @@ public class FrasBoardGame extends Game {
 
     @Override
     public void dispose() {
+        GameManager.INSTANCE.saveResults();
         batch.dispose();
         assetManager.dispose();
     }

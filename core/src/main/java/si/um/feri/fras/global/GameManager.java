@@ -2,10 +2,14 @@ package si.um.feri.fras.global;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
+import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.utils.Json;
 
 import java.util.ArrayList;
 
 public class GameManager {
+
+    private static final String DATA_FILE = "results.json";
 
     public static final GameManager INSTANCE = new GameManager();
     private static final String GRID_SIZE_KEY = "gridSize";
@@ -31,6 +35,8 @@ public class GameManager {
     private ArrayList<Result> results = new ArrayList<>();;
 
     private GameManager() {
+        loadResults();
+
         PREFS = Gdx.app.getPreferences("NurikabeGamePreferences");
 
         // Load grid size or set to default
@@ -96,6 +102,32 @@ public class GameManager {
         this.soundEffectsEnabled = soundEffectsEnabled;
         PREFS.putBoolean(SOUND_EFFECTS_ENABLED_KEY, soundEffectsEnabled);
         PREFS.flush();
+    }
+
+    public void saveResults() {
+        FileHandle fileHandle = Gdx.files.local(DATA_FILE);  // Save file in local storage
+        Json json = new Json();  // Create a new Json object
+
+        // Serialize the results ArrayList into a JSON string
+        String jsonData = json.toJson(results);
+
+        // Write the JSON string to the file
+        fileHandle.writeString(jsonData, false);
+    }
+
+
+    public void loadResults() {
+        FileHandle fileHandle = Gdx.files.local(DATA_FILE);  // Load file from local storage
+
+        if (fileHandle.exists()) {
+            Json json = new Json();  // Create a new Json object
+
+            // Read the JSON string from the file
+            String jsonData = fileHandle.readString();
+
+            // Deserialize the JSON string into an ArrayList<Result>
+            results = json.fromJson(ArrayList.class, Result.class, jsonData);
+        }
     }
 }
 
