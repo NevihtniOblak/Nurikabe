@@ -23,11 +23,15 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 import java.awt.Menu;
+import java.util.ArrayList;
 
 import si.um.feri.fras.FrasBoardGame;
 import si.um.feri.fras.assets.AssetDescriptors;
 import si.um.feri.fras.assets.RegionNames;
 import si.um.feri.fras.config.GameConfig;
+import si.um.feri.fras.global.Difficulty;
+import si.um.feri.fras.global.GameManager;
+import si.um.feri.fras.global.Result;
 
 public class LeaderboardScreen extends ScreenAdapter {
 
@@ -126,14 +130,23 @@ public class LeaderboardScreen extends ScreenAdapter {
 
         // Add header row
         leaderboardTable.add(new Label("Rank", skin)).padRight(20);
-        leaderboardTable.add(new Label("Player", skin)).padRight(20);
+        leaderboardTable.add(new Label("Time", skin)).padRight(20); // Display time instead of player name
+        leaderboardTable.add(new Label("Board Size", skin)).padRight(20);
+        leaderboardTable.add(new Label("Difficulty", skin)).padRight(20);
         leaderboardTable.add(new Label("Score", skin)).row();
 
-        // Add sample leaderboard entries
-        for (int i = 1; i <= 20; i++) {
-            leaderboardTable.add(new Label(String.valueOf(i), skin)).padRight(20);
-            leaderboardTable.add(new Label("Player " + i, skin)).padRight(20);
-            leaderboardTable.add(new Label(String.valueOf(1000 - i * 10), skin)).padBottom(10).row();
+        // Retrieve results and sort by score
+        ArrayList<Result> results = GameManager.INSTANCE.getResults();
+        results.sort((r1, r2) -> Integer.compare(r2.calcScore(), r1.calcScore())); // Sort by score in descending order
+
+        // Add leaderboard entries dynamically
+        int rank = 1;
+        for (Result result : results) {
+            leaderboardTable.add(new Label(String.valueOf(rank++), skin)).padRight(20);
+            leaderboardTable.add(new Label(String.valueOf(result.time), skin)).padRight(20);
+            leaderboardTable.add(new Label(String.valueOf(result.boardSize), skin)).padRight(20);
+            leaderboardTable.add(new Label(Difficulty.toString(result.difficulty), skin)).padRight(20);
+            leaderboardTable.add(new Label(String.valueOf(result.calcScore()), skin)).padBottom(10).row();
         }
 
         // Create a ScrollPane to make the leaderboard scrollable
@@ -151,6 +164,7 @@ public class LeaderboardScreen extends ScreenAdapter {
 
         return container;
     }
+
 
 
 

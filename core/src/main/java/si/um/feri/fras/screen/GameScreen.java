@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
@@ -37,6 +38,11 @@ public class GameScreen extends ScreenAdapter {
     private Skin skin;
     private TextureAtlas gameplayAtlas;
 
+    private float timer = 0f;  // Timer in seconds
+    private boolean timerRunning = true;  // Flag to control if the timer is running
+
+    private Label timerLabel;
+
     public GameScreen(FrasBoardGame game) {
         this.game = game;
         assetManager = game.getAssetManager();
@@ -55,8 +61,11 @@ public class GameScreen extends ScreenAdapter {
 
         gameplayStage.addActor(createGrid());
         hudStage.addActor(createBackButton());
+        hudStage.addActor(createCheckResultButton());
+        timerLabel = createTimer();
+        hudStage.addActor(timerLabel);
 
-        Gdx.input.setInputProcessor(new InputMultiplexer(gameplayStage, hudStage));
+        Gdx.input.setInputProcessor(new InputMultiplexer(hudStage, gameplayStage));
     }
 
     @Override
@@ -68,6 +77,8 @@ public class GameScreen extends ScreenAdapter {
     @Override
     public void render(float delta) {
         ScreenUtils.clear(195 / 255f, 195 / 255f, 195 / 255f, 0f);
+
+        updateTimer(delta);
 
         // update
         gameplayStage.act(delta);
@@ -116,6 +127,44 @@ public class GameScreen extends ScreenAdapter {
 
         return table; // Return the configured table
     }
+
+    private Actor createCheckResultButton() {
+        final TextButton checkResultButton = new TextButton("Check Result", skin);
+        checkResultButton.setWidth(150);
+        checkResultButton.setPosition(GameConfig.HUD_WIDTH / 2f - checkResultButton.getWidth() / 2f, 100f);  // Position above back button
+        checkResultButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                // Stop the timer when the button is clicked
+                if(true) {
+                    timerRunning = false;
+                    GameManager.INSTANCE.addResult((int)timer);
+
+                }
+            }
+        });
+        return checkResultButton;
+    }
+
+
+    private Label createTimer(){
+        // Create the timer label
+        Label timerLabel;
+        Label.LabelStyle timerStyle = new Label.LabelStyle();
+        timerStyle.font = skin.getFont("font");  // Ensure you have a default font in the skin
+        timerLabel = new Label("Time: 0s", timerStyle);
+        timerLabel.setPosition(GameConfig.HUD_WIDTH - 120, GameConfig.HUD_HEIGHT - 30); // Top right corner
+
+        return timerLabel;
+    }
+
+    private void updateTimer(float delta) {
+        if (timerRunning) {
+            timer += delta;  // Increment timer by delta (time passed since last frame)
+            timerLabel.setText("Time: " + (int) timer + "s");  // Update the label text
+        }
+    }
+
 
 
 }

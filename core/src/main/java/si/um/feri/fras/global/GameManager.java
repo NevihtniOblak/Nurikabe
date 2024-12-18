@@ -3,6 +3,8 @@ package si.um.feri.fras.global;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
 
+import java.util.ArrayList;
+
 public class GameManager {
 
     public static final GameManager INSTANCE = new GameManager();
@@ -14,6 +16,8 @@ public class GameManager {
     private final Preferences PREFS;
     private int gridSize;
     private Difficulty difficulty;
+
+    private ArrayList<Result> results = new ArrayList<>();;
 
     private GameManager() {
         PREFS = Gdx.app.getPreferences("NurikabeGamePreferences");
@@ -48,6 +52,15 @@ public class GameManager {
 
     public static GameManager getInstance() {
         return INSTANCE;
+    }
+
+
+    public void addResult(int time){
+        results.add(new Result(time, difficulty, gridSize));
+    }
+
+    public ArrayList<Result> getResults(){
+        return results;
     }
 }
 
