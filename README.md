@@ -48,12 +48,12 @@ Igralna površina (mreža), črn kvadrat, bel kvadrat z piko, števec časa
 
 #Changelog
 
-##11.2.2024
+## 11.2.2024
 ### Omogočil osnovni izris igralne površine 10x10 in gumb za vračanje na glavni meni
 
-##18.12.2024
-###Implementiral klikanje na igralne plošče in spreminjanje njihovega stanja
-###Omogočil izris različne velikosti igralne plošče glede na nastavitve
-###Dodal timer
-###Dodal glasbo
-###Dodal check solution gumb (zaenkrat predpostavlja da je rešitev vedno pravilna), ki shrani rezultat igre
+## 18.12.2024
+### Implementiral klikanje na igralne plošče in spreminjanje njihovega stanja
+### Omogočil izris različne velikosti igralne plošče glede na nastavitve
+### Dodal timer
+### Dodal glasbo
+### Dodal check solution gumb (zaenkrat predpostavlja da je rešitev vedno pravilna), ki shrani rezultat igre
