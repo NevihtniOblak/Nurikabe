@@ -132,11 +132,11 @@ public class SettingsScreen extends ScreenAdapter {
         difficultySelectBox.setSelected(Difficulty.toString(GameManager.INSTANCE.getDifficulty()));
 
 
-        Label musicLabel = new Label("Disable Music:", uiSkin);
+        Label musicLabel = new Label("Music:", uiSkin);
         CheckBox musicCheckBox = new CheckBox("", uiSkin);
         musicCheckBox.setChecked(musicEnabled);
 
-        Label soundEffectsLabel = new Label("Disable Sound Effects:", uiSkin);
+        Label soundEffectsLabel = new Label("Sound Effects:", uiSkin);
         CheckBox soundEffectsCheckBox = new CheckBox("", uiSkin);
         soundEffectsCheckBox.setChecked(soundEffectsEnabled);
 

@@ -15,6 +15,16 @@ public class AssetPaths {
 
     public static final String PUT_DOT_SOUND = "assets/sounds/put_pika.mp3";
 
+
+    public static final String PUT_BLACK_SOUND_2 = "assets/sounds/customPutBlack.wav";
+
+    public static final String PUT_DOT_SOUND_2 = "assets/sounds/customPutDot.wav";
+
+    public static final String MAIN_MENU_MUSIC = "assets/sounds/customMenu.mod.mp3";
+
+    public static final String GAME_MUSIC = "assets/sounds/customGame.mod.mp3";
+
+
     //UI STUFF
     //public static final String UI_FONT = "C:\\Users\\Flex\\Documents\\Programming\\FERI\\Vaje\\vaje3L\\1.semester\\RRI\\boardGame\\assets\\ui\\font-export.fnt";
 

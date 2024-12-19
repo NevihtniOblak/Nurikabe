@@ -52,6 +52,10 @@ public class FrasBoardGame extends Game {
         assetManager.load(AssetDescriptors.UI_FONT);
         assetManager.load(AssetDescriptors.UI_SKIN);
         assetManager.load(AssetDescriptors.UI_ATLAS);
+        assetManager.load(AssetDescriptors.MAIN_MENU_MUSIC);
+        assetManager.load(AssetDescriptors.GAME_MUSIC);
+        assetManager.load(AssetDescriptors.PUT_BLACK_SOUND_2);
+        assetManager.load(AssetDescriptors.PUT_DOT_SOUND_2);
 
         assetManager.finishLoading();
 
@@ -84,6 +88,10 @@ public class FrasBoardGame extends Game {
         levelCompleteSound = assetManager.get(AssetDescriptors.LEVEL_COMPLETE_SOUND);
         putBlackSound = assetManager.get(AssetDescriptors.PUT_BLACK_SOUND);
         putDotSound = assetManager.get(AssetDescriptors.PUT_DOT_SOUND);
+
+        //GENERATED SOUNDS
+
+
 
 
 

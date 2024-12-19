@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -38,6 +39,8 @@ public class GameScreen extends ScreenAdapter {
     private Skin skin;
     private TextureAtlas gameplayAtlas;
 
+    private Music gameMusic;
+
     private float timer = 0f;  // Timer in seconds
     private boolean timerRunning = true;  // Flag to control if the timer is running
 
@@ -59,6 +62,16 @@ public class GameScreen extends ScreenAdapter {
         skin = assetManager.get(AssetDescriptors.UI_SKIN);
         gameplayAtlas = assetManager.get(AssetDescriptors.GAME_ATLAS);
 
+        gameMusic = assetManager.get(AssetDescriptors.GAME_MUSIC);
+        if(GameManager.INSTANCE.isMusicEnabled()) {
+            Music menuMusic = assetManager.get(AssetDescriptors.MAIN_MENU_MUSIC);
+            if(menuMusic.isPlaying()) {
+                menuMusic.stop();
+            }
+            gameMusic.play();
+        }
+
+
         gameplayStage.addActor(createGrid());
         hudStage.addActor(createBackButton());
         hudStage.addActor(createCheckResultButton());
@@ -77,6 +90,15 @@ public class GameScreen extends ScreenAdapter {
     @Override
     public void render(float delta) {
         ScreenUtils.clear(195 / 255f, 195 / 255f, 195 / 255f, 0f);
+
+        if(!GameManager.INSTANCE.isMusicEnabled()) {
+            gameMusic.stop();
+        }
+        else{
+            if(!gameMusic.isPlaying()) {
+                gameMusic.play();
+            }
+        }
 
         updateTimer(delta);
 
@@ -117,7 +139,7 @@ public class GameScreen extends ScreenAdapter {
     private Table createGrid() {
         Table table = new Table();
         table.setFillParent(true);
-        Board board = new Board(GameManager.INSTANCE.getGridSize(), GameManager.INSTANCE.getGridSize(), 5f, gameplayAtlas);
+        Board board = new Board(GameManager.INSTANCE.getGridSize(), GameManager.INSTANCE.getGridSize(), 5f, assetManager);
 
         table.add(board)
             .pad(20)

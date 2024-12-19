@@ -1,6 +1,7 @@
 package si.um.feri.fras.assets;
 
 import com.badlogic.gdx.assets.AssetDescriptor;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -26,6 +27,18 @@ public class AssetDescriptors {
 
     public static final AssetDescriptor<Sound> PUT_DOT_SOUND =
         new AssetDescriptor<Sound>(AssetPaths.PUT_DOT_SOUND, Sound.class);
+
+    public static final AssetDescriptor<Sound> PUT_BLACK_SOUND_2 =
+        new AssetDescriptor<Sound>(AssetPaths.PUT_BLACK_SOUND_2, Sound.class);
+
+    public static final AssetDescriptor<Sound> PUT_DOT_SOUND_2 =
+        new AssetDescriptor<Sound>(AssetPaths.PUT_DOT_SOUND_2, Sound.class);
+
+    public static final AssetDescriptor<Music> MAIN_MENU_MUSIC =
+        new AssetDescriptor<Music>(AssetPaths.MAIN_MENU_MUSIC, Music.class);
+
+    public static final AssetDescriptor<Music> GAME_MUSIC =
+        new AssetDescriptor<Music>(AssetPaths.GAME_MUSIC, Music.class);
 
     //UI STUFF
     public static final AssetDescriptor<BitmapFont> UI_FONT =

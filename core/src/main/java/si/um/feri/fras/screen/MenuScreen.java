@@ -3,6 +3,7 @@ package si.um.feri.fras.screen;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -22,6 +23,7 @@ import si.um.feri.fras.FrasBoardGame;
 import si.um.feri.fras.assets.AssetDescriptors;
 import si.um.feri.fras.assets.RegionNames;
 import si.um.feri.fras.config.GameConfig;
+import si.um.feri.fras.global.GameManager;
 
 public class MenuScreen extends ScreenAdapter {
 
@@ -36,6 +38,8 @@ public class MenuScreen extends ScreenAdapter {
 
     private TextureAtlas gameplayAtlas;
 
+    private Music menuMusic;
+
     public MenuScreen(FrasBoardGame game) {
         this.game = game;
         assetManager = game.getAssetManager();
@@ -49,6 +53,16 @@ public class MenuScreen extends ScreenAdapter {
         skin = assetManager.get(AssetDescriptors.UI_SKIN);
         uiAtlas = assetManager.get(AssetDescriptors.UI_ATLAS);
         gameplayAtlas = assetManager.get(AssetDescriptors.GAME_ATLAS);
+        menuMusic = assetManager.get(AssetDescriptors.MAIN_MENU_MUSIC);
+
+        if(GameManager.INSTANCE.isMusicEnabled()) {
+            Music gameMusic = assetManager.get(AssetDescriptors.GAME_MUSIC);
+            if(gameMusic.isPlaying()) {
+                gameMusic.stop();
+            }
+            menuMusic.setLooping(true);
+            menuMusic.play();
+        }
 
         stage.addActor(createUi());
         Gdx.input.setInputProcessor(stage);
@@ -62,6 +76,15 @@ public class MenuScreen extends ScreenAdapter {
     @Override
     public void render(float delta) {
         ScreenUtils.clear(0f, 0f, 0f, 0f);
+
+        if(!GameManager.INSTANCE.isMusicEnabled()) {
+            menuMusic.stop();
+        }
+        else{
+            if(!menuMusic.isPlaying()) {
+                menuMusic.play();
+            }
+        }
 
         stage.act(delta);
         stage.draw();

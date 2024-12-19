@@ -1,6 +1,8 @@
 package si.um.feri.fras;
 
 import com.badlogic.gdx.assets.AssetDescriptor;
+import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -8,8 +10,10 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 
+import si.um.feri.fras.assets.AssetDescriptors;
 import si.um.feri.fras.assets.RegionNames;
 import si.um.feri.fras.global.CellState;
+import si.um.feri.fras.global.GameManager;
 
 public class Board extends Actor {
     private final int rows;
@@ -21,11 +25,15 @@ public class Board extends Actor {
     private final TextureRegion blackCellTexture;
     private final TextureRegion markedCellTexture;
 
-    public Board(int rows, int cols, float cellSize, TextureAtlas gameplayAtlas) {
+    private final Sound putBlackSound;
+
+    private final Sound putDotSound;
+
+    public Board(int rows, int cols, float cellSize, AssetManager assetManager) {
         this.rows = rows;
         this.cols = cols;
         this.cellSize = cellSize;
-        this.gameplayAtlas = gameplayAtlas;
+        this.gameplayAtlas = assetManager.get(AssetDescriptors.GAME_ATLAS);
 
         cellStates = new CellState[rows][cols];
         for (int row = 0; row < rows; row++) {
@@ -37,6 +45,11 @@ public class Board extends Actor {
         neutralCellTexture = gameplayAtlas.findRegion(RegionNames.TILE_NEUTRAL);
         blackCellTexture = gameplayAtlas.findRegion(RegionNames.TILE_BLACK);
         markedCellTexture = gameplayAtlas.findRegion(RegionNames.TILE_MARKED);
+
+        putBlackSound = assetManager.get(AssetDescriptors.PUT_BLACK_SOUND_2);
+        putBlackSound.setVolume(1,1f);
+        putDotSound = assetManager.get(AssetDescriptors.PUT_DOT_SOUND_2);
+        putDotSound.setVolume(0, 1f);
 
 
         setWidth(cols * cellSize);
@@ -124,9 +137,15 @@ public class Board extends Actor {
         switch (currentState) {
             case NEUTRAL:
                 cellStates[row][col] = CellState.BLACK;  // Change to BLACK if it was NEUTRAL
+                if(GameManager.INSTANCE.areSoundEffectsEnabled()) {
+                    putBlackSound.play();
+                }
                 break;
             case BLACK:
                 cellStates[row][col] = CellState.MARKED;  // Change to MARKED if it was BLACK
+                if(GameManager.INSTANCE.areSoundEffectsEnabled()) {
+                    putDotSound.play();
+                }
                 break;
             case MARKED:
                 cellStates[row][col] = CellState.NEUTRAL;  // Change to NEUTRAL if it was MARKED
