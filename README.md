@@ -46,7 +46,7 @@ Z desnim klikom na neko polje ga označimo kot črno celico, z levim klikom pa k
 Igralna površina (mreža), črn kvadrat, bel kvadrat z piko, števec časa
 
 
-#Changelog
+# Changelog
 
 ## 11.2.2024
 ### Omogočil osnovni izris igralne površine 10x10 in gumb za vračanje na glavni meni
