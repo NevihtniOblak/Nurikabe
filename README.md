@@ -48,7 +48,7 @@ Igralna površina (mreža), črn kvadrat, bel kvadrat z piko, števec časa
 
 # Changelog
 
-## 11.2.2024
+## 11.12.2024
 ### Omogočil izris igralne površine 10x10 na osnovnem ozadju
 ### Dodal gumb za vračanje na glavni meni
 
