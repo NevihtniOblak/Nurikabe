@@ -28,6 +28,17 @@ public class Board extends Actor {
     private final TextureRegion blackCellTexture;
     private final TextureRegion markedCellTexture;
 
+    private final TextureRegion island1Texture;
+    private final TextureRegion island2Texture;
+    private final TextureRegion island3Texture;
+    private final TextureRegion island4Texture;
+    private final TextureRegion island5Texture;
+    private final TextureRegion island6Texture;
+    private final TextureRegion island7Texture;
+    private final TextureRegion island8Texture;
+    private final TextureRegion island9Texture;
+    private final TextureRegion island10Texture;
+
     private final Sound putBlackSound;
 
     private final Sound putDotSound;
@@ -51,12 +62,23 @@ public class Board extends Actor {
         //TODO Da so številke
         System.out.println(islands);
         for (Island island : islands) {
-            cellStates[island.getRow()][island.getCol()] = CellState.BLACK;
+            cellStates[island.getRow()][island.getCol()] = CellState.ISLAND;
         }
 
         neutralCellTexture = gameplayAtlas.findRegion(RegionNames.TILE_NEUTRAL);
         blackCellTexture = gameplayAtlas.findRegion(RegionNames.TILE_BLACK);
         markedCellTexture = gameplayAtlas.findRegion(RegionNames.TILE_MARKED);
+
+        island1Texture = gameplayAtlas.findRegion(RegionNames.TILE_1);
+        island2Texture = gameplayAtlas.findRegion(RegionNames.TILE_2);
+        island3Texture = gameplayAtlas.findRegion(RegionNames.TILE_3);
+        island4Texture = gameplayAtlas.findRegion(RegionNames.TILE_4);
+        island5Texture = gameplayAtlas.findRegion(RegionNames.TILE_5);
+        island6Texture = gameplayAtlas.findRegion(RegionNames.TILE_6);
+        island7Texture = gameplayAtlas.findRegion(RegionNames.TILE_7);
+        island8Texture = gameplayAtlas.findRegion(RegionNames.TILE_8);
+        island9Texture = gameplayAtlas.findRegion(RegionNames.TILE_9);
+        island10Texture = gameplayAtlas.findRegion(RegionNames.TILE_10);
 
         putBlackSound = assetManager.get(AssetDescriptors.PUT_BLACK_SOUND_2);
         putBlackSound.setVolume(1,1f);
@@ -104,6 +126,9 @@ public class Board extends Actor {
                     case MARKED:
                         cellTexture = markedCellTexture;
                         break;
+                    case ISLAND:
+                        cellTexture = getIslandTexture(row,col);
+                        break;
                     default:
                         throw new IllegalStateException("Unknown cell state: " + cellState);
                 }
@@ -118,6 +143,37 @@ public class Board extends Actor {
                 );
             }
         }
+    }
+
+    private TextureRegion getIslandTexture(int row, int col) {
+        for (Island island : islands) {
+            if (island.getRow() == row && island.getCol() == col) {
+                int islandNumber = island.getIsland();
+                switch (islandNumber){
+                    case 1:
+                        return island1Texture;
+                    case 2:
+                        return island2Texture;
+                    case 3:
+                        return island3Texture;
+                    case 4:
+                        return island4Texture;
+                    case 5:
+                        return island5Texture;
+                    case 6:
+                        return island6Texture;
+                    case 7:
+                        return island7Texture;
+                    case 8:
+                        return island8Texture;
+                    case 9:
+                        return island9Texture;
+                    case 10:
+                        return island10Texture;
+                }
+            }
+        }
+        return null;
     }
 
 
