@@ -2,11 +2,13 @@ package si.um.feri.fras.global;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
-import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.utils.Json;
 
 import java.util.ArrayList;
+
+import si.um.feri.fras.global.loading.BoardConfiguration;
+import si.um.feri.fras.global.loading.Island;
 
 public class GameManager {
 
@@ -33,10 +35,14 @@ public class GameManager {
 
     private boolean soundEffectsEnabled;
 
-    private ArrayList<Result> results = new ArrayList<>();;
+    private ArrayList<Result> results = new ArrayList<>();
+
+    private ArrayList<BoardConfiguration> boards = new ArrayList<>();
 
     private GameManager() {
         loadResults();
+
+        loadBoards();
 
         PREFS = Gdx.app.getPreferences("NurikabeGamePreferences");
 
@@ -130,6 +136,49 @@ public class GameManager {
             results = json.fromJson(ArrayList.class, Result.class, jsonData);
         }
     }
+
+    public void loadBoards() {
+        FileHandle fileHandle = Gdx.files.internal("boards/nurikabeBoards.json");  // Load file from assets/boards/ directory
+
+        if (fileHandle.exists()) {
+            Json json = new Json();  // Create a new Json object
+
+            // Read the JSON string from the file
+            String jsonData = fileHandle.readString();
+
+            // Deserialize the JSON string into an ArrayList<BoardConfiguration>
+            boards = json.fromJson(ArrayList.class, BoardConfiguration.class, jsonData);
+        }
+    }
+
+
+    public ArrayList<BoardConfiguration> getBoards() {
+        return boards;
+    }
+
+    public ArrayList<BoardConfiguration> getBoardsBySize(int size) {
+        ArrayList<BoardConfiguration> boardsBySize = new ArrayList<>();
+        for (BoardConfiguration board : boards) {
+            if (board.getGridSize() == size) {
+                boardsBySize.add(board);
+            }
+        }
+        return boardsBySize;
+    }
+
+    public ArrayList<Island> getRandomBoardBySize(int size) {
+        System.out.println(size);
+        System.out.println(boards);
+        //TODO Make random
+        ArrayList<Island> islands = new ArrayList<>();
+        for (BoardConfiguration board : boards) {
+            if (board.getGridSize() == size) {
+                islands = board.getCells();
+            }
+        }
+        return islands;
+    }
+
 }
 
 

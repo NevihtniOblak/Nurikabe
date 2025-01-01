@@ -19,11 +19,15 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
+import java.util.ArrayList;
+
 import si.um.feri.fras.Board;
 import si.um.feri.fras.FrasBoardGame;
 import si.um.feri.fras.assets.AssetDescriptors;
 import si.um.feri.fras.config.GameConfig;
 import si.um.feri.fras.global.GameManager;
+import si.um.feri.fras.global.loading.BoardConfiguration;
+import si.um.feri.fras.global.loading.Island;
 
 public class GameScreen extends ScreenAdapter {
 
@@ -139,7 +143,8 @@ public class GameScreen extends ScreenAdapter {
     private Table createGrid() {
         Table table = new Table();
         table.setFillParent(true);
-        Board board = new Board(GameManager.INSTANCE.getGridSize(), GameManager.INSTANCE.getGridSize(), 5f, assetManager);
+        ArrayList<Island> islands = GameManager.INSTANCE.getRandomBoardBySize(GameManager.INSTANCE.getGridSize());
+        Board board = new Board(GameManager.INSTANCE.getGridSize(), GameManager.INSTANCE.getGridSize(), 5f, assetManager, islands);
 
         table.add(board)
             .pad(20)

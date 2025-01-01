@@ -10,10 +10,13 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 
+import java.util.ArrayList;
+
 import si.um.feri.fras.assets.AssetDescriptors;
 import si.um.feri.fras.assets.RegionNames;
 import si.um.feri.fras.global.CellState;
 import si.um.feri.fras.global.GameManager;
+import si.um.feri.fras.global.loading.Island;
 
 public class Board extends Actor {
     private final int rows;
@@ -29,17 +32,26 @@ public class Board extends Actor {
 
     private final Sound putDotSound;
 
-    public Board(int rows, int cols, float cellSize, AssetManager assetManager) {
+    private final ArrayList<Island> islands;
+
+    public Board(int rows, int cols, float cellSize, AssetManager assetManager, ArrayList<Island> islands) {
         this.rows = rows;
         this.cols = cols;
         this.cellSize = cellSize;
         this.gameplayAtlas = assetManager.get(AssetDescriptors.GAME_ATLAS);
+        this.islands = islands;
 
         cellStates = new CellState[rows][cols];
         for (int row = 0; row < rows; row++) {
             for (int col = 0; col < cols; col++) {
                 cellStates[row][col] = CellState.NEUTRAL;
             }
+        }
+
+        //TODO Da so številke
+        System.out.println(islands);
+        for (Island island : islands) {
+            cellStates[island.getRow()][island.getCol()] = CellState.BLACK;
         }
 
         neutralCellTexture = gameplayAtlas.findRegion(RegionNames.TILE_NEUTRAL);
@@ -156,6 +168,15 @@ public class Board extends Actor {
     }
 
 
+    private void validateSolution() {
+        // Check if the current board state is a solution
+        // Implement your solution validation logic here
+    }
+
+    private void loadBoard() {
+        // Load a board from a JSON file
+        // Implement your board loading logic here
+    }
 
 
 }
