@@ -50,6 +50,8 @@ public class GameScreen extends ScreenAdapter {
 
     private Label timerLabel;
 
+    private Board board;
+
     public GameScreen(FrasBoardGame game) {
         this.game = game;
         assetManager = game.getAssetManager();
@@ -144,7 +146,7 @@ public class GameScreen extends ScreenAdapter {
         Table table = new Table();
         table.setFillParent(true);
         ArrayList<Island> islands = GameManager.INSTANCE.getRandomBoardBySize(GameManager.INSTANCE.getGridSize());
-        Board board = new Board(GameManager.INSTANCE.getGridSize(), GameManager.INSTANCE.getGridSize(), 5f, assetManager, islands);
+        board = new Board(GameManager.INSTANCE.getGridSize(), GameManager.INSTANCE.getGridSize(), 5f, assetManager, islands);
 
         table.add(board)
             .pad(20)
@@ -163,7 +165,7 @@ public class GameScreen extends ScreenAdapter {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 // Stop the timer when the button is clicked
-                if(true) {
+                if(board.validateSolution()) {
                     timerRunning = false;
                     GameManager.INSTANCE.addResult((int)timer);
 

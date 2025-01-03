@@ -11,7 +11,10 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Queue;
 
+import kotlin.Pair;
 import si.um.feri.fras.assets.AssetDescriptors;
 import si.um.feri.fras.assets.RegionNames;
 import si.um.feri.fras.global.CellState;
@@ -22,7 +25,9 @@ public class Board extends Actor {
     private final int rows;
     private final int cols;
     private final float cellSize;
-    private final CellState[][] cellStates; // 2D array to represent cell states
+    private final CellState[][] cellStates; // 2D array to represent cell state
+
+    private final boolean[][] visited; // 2D array to represent visited cells
     private final TextureAtlas gameplayAtlas; // Reference to gameplayAtlas
     private final TextureRegion neutralCellTexture;
     private final TextureRegion blackCellTexture;
@@ -53,9 +58,11 @@ public class Board extends Actor {
         this.islands = islands;
 
         cellStates = new CellState[rows][cols];
+        visited = new boolean[rows][cols];
         for (int row = 0; row < rows; row++) {
             for (int col = 0; col < cols; col++) {
                 cellStates[row][col] = CellState.NEUTRAL;
+                visited[row][col] = false;
             }
         }
 
@@ -224,16 +231,147 @@ public class Board extends Actor {
     }
 
 
-    private void validateSolution() {
-        // Check if the current board state is a solution
-        // Implement your solution validation logic here
+    public boolean validateSolution() {
+        int blackCells = 0;
+        int randomBlackCell = -1;
+        //Check for 2x2
+        for(int row = 0; row < rows - 1; row++) {
+            for(int col = 0; col < cols - 1; col++) {
+                if(cellStates[row][col] == CellState.BLACK &&
+                    cellStates[row + 1][col] == CellState.BLACK &&
+                    cellStates[row][col + 1] == CellState.BLACK &&
+                    cellStates[row + 1][col + 1] == CellState.BLACK) {
+                    return false;
+                }
+            }
+        }
+        System.out.println("2x2 check passed");
+        //count black cells
+        for(int row = 0; row < rows; row++) {
+            for(int col = 0; col < cols; col++) {
+                if(cellStates[row][col] == CellState.BLACK) {
+                    blackCells++;
+                    randomBlackCell = row * cols + col;
+                }
+            }
+        }
+
+        if(blackCells == 0) {
+            return false;
+        }
+
+        System.out.println("Black cells count passed");
+        //Bfs for black cells
+        int blackCellsFound = 1;
+        resetVisited();
+        Queue<Integer> queue = new LinkedList<>();
+        queue.add(randomBlackCell);
+        visited[randomBlackCell / cols][randomBlackCell % cols] = true;
+        while(!queue.isEmpty()) {
+            int currentCell = queue.poll();
+            int row = currentCell / cols;
+            int col = currentCell % cols;
+            if(row > 0 && cellStates[row - 1][col] == CellState.BLACK && !visited[row - 1][col]) {
+                queue.add((row - 1) * cols + col);
+                visited[row - 1][col] = true;
+                blackCellsFound++;
+            }
+            if(row < rows - 1 && cellStates[row + 1][col] == CellState.BLACK && !visited[row + 1][col]) {
+                queue.add((row + 1) * cols + col);
+                visited[row + 1][col] = true;
+                blackCellsFound++;
+            }
+            if(col > 0 && cellStates[row][col - 1] == CellState.BLACK && !visited[row][col - 1]) {
+                queue.add(row * cols + col - 1);
+                visited[row][col - 1] = true;
+                blackCellsFound++;
+            }
+            if(col < cols - 1 && cellStates[row][col + 1] == CellState.BLACK && !visited[row][col + 1]) {
+                queue.add(row * cols + col + 1);
+                visited[row][col + 1] = true;
+                blackCellsFound++;
+            }
+        }
+        if(blackCellsFound != blackCells) {
+            return false;
+        }
+
+        System.out.println("Black cells bfs passed");
+
+        //Bfs for each island
+        resetVisited();
+        for (Island island : islands) {
+            int islandCellsFound = 0;
+            int islandNumber = island.getIsland();
+            int islandRow = island.getRow();
+            int islandCol = island.getCol();
+            queue.clear();
+            queue.add(islandRow * cols + islandCol);
+            visited[islandRow][islandCol] = true;
+            while(!queue.isEmpty()) {
+                int currentCell = queue.poll();
+                int row = currentCell / cols;
+                int col = currentCell % cols;
+                islandCellsFound++;
+
+                if(row > 0 && !visited[row - 1][col]) {
+                    if(cellStates[row - 1][col] == CellState.ISLAND) {
+                        return false;
+                    }
+                    else if(cellStates[row - 1][col] == CellState.MARKED) {
+                        queue.add((row - 1) * cols + col);
+                        visited[row - 1][col] = true;
+                    }
+                }
+                if(row < rows - 1 && !visited[row + 1][col]) {
+                    if(cellStates[row + 1][col] == CellState.ISLAND) {
+                        return false;
+                    }
+                    else if(cellStates[row + 1][col] == CellState.MARKED) {
+                        queue.add((row + 1) * cols + col);
+                        visited[row + 1][col] = true;
+                    }
+                }
+                if(col > 0 && !visited[row][col - 1]) {
+                    if(cellStates[row][col - 1] == CellState.ISLAND) {
+                        return false;
+                    }
+                    else if(cellStates[row][col - 1] == CellState.MARKED) {
+                        queue.add(row * cols + col - 1);
+                        visited[row][col - 1] = true;
+                    }
+                }
+                if(col < cols - 1 &&  !visited[row][col + 1]) {
+                    if(cellStates[row][col + 1] == CellState.ISLAND) {
+                        return false;
+                    }
+                    else if(cellStates[row][col + 1] == CellState.MARKED) {
+                        queue.add(row * cols + col + 1);
+                        visited[row][col + 1] = true;
+                    }
+                }
+            }
+            if(islandCellsFound != islandNumber) {
+                System.out.println(islandCellsFound);
+                System.out.println(islandNumber);
+
+                System.out.println("Island " + islandNumber + " check failed");
+
+                return false;
+            }
+        }
+
+        return true;
+
     }
 
-    private void loadBoard() {
-        // Load a board from a JSON file
-        // Implement your board loading logic here
+    private void resetVisited() {
+        for (int row = 0; row < rows; row++) {
+            for (int col = 0; col < cols; col++) {
+                visited[row][col] = false;
+            }
+        }
     }
-
 
 }
 

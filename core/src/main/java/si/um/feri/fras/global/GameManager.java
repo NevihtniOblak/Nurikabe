@@ -138,16 +138,21 @@ public class GameManager {
     }
 
     public void loadBoards() {
-        FileHandle fileHandle = Gdx.files.internal("boards/nurikabeBoards.json");  // Load file from assets/boards/ directory
+        // Load file from assets/boards/ directory
+        FileHandle fileHandle = Gdx.files.internal("boards/nurikabeBoards.json");
 
         if (fileHandle.exists()) {
-            Json json = new Json();  // Create a new Json object
+            // Create a new Json object
+            Json json = new Json();
 
             // Read the JSON string from the file
             String jsonData = fileHandle.readString();
 
             // Deserialize the JSON string into an ArrayList<BoardConfiguration>
-            boards = json.fromJson(ArrayList.class, BoardConfiguration.class, jsonData);
+            ArrayList<BoardConfiguration> boards = json.fromJson(ArrayList.class, BoardConfiguration.class, jsonData);
+            System.out.println(boards.get(0).getCells().size());
+        } else {
+            System.out.println("File not found: boards/nurikabeBoards.json");
         }
     }
 
@@ -176,6 +181,7 @@ public class GameManager {
                 islands = board.getCells();
             }
         }
+
         return islands;
     }
 

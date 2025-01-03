@@ -54,9 +54,11 @@ public class BoardsPacker {
 
         boardsPacker.addBoard(new BoardConfiguration(5, new ArrayList<Island>() {{
             add(new Island(0, 0, 1));
-            add(new Island(0, 1, 2));
-            add(new Island(1, 0, 3));
-            add(new Island(1, 1, 4));
+            add(new Island(1, 1, 2));
+            add(new Island(1, 3, 2));
+            add(new Island(3, 2, 1));
+            add(new Island(4, 0, 1));
+            add(new Island(4, 4, 1));
         }}));
 
 
