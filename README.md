@@ -44,3 +44,17 @@ Z desnim klikom na neko polje ga označimo kot črno celico, z levim klikom pa k
 
 ## ELEMENTI
 Igralna površina (mreža), črn kvadrat, bel kvadrat z piko, števec časa
+
+
+# Changelog
+
+## 11.12.2024
+### Omogočil izris igralne površine 10x10 na osnovnem ozadju
+### Dodal gumb za vračanje na glavni meni
+
+## 18.12.2024
+### Implementiral klikanje na igralne plošče in spreminjanje njihovega stanja
+### Omogočil izris različne velikosti igralne plošče glede na nastavitve
+### Dodal timer
+### Dodal glasbo
+### Dodal check solution gumb (zaenkrat predpostavlja da je rešitev vedno pravilna), ki shrani rezultat igre
