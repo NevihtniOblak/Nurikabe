@@ -1,23 +1,27 @@
 package si.um.feri.fras.global.loading;
 
+import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.Json;
+import com.badlogic.gdx.utils.JsonValue;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class BoardConfiguration {
     private final int gridSize;
-    private final ArrayList<Island> islands;
+    private final Array<Island> islands;
 
     public BoardConfiguration() {
         this.gridSize = -1;
-        this.islands = new ArrayList<>();
+        this.islands = new Array<>();
     }
 
     public BoardConfiguration(int gridSize) {
         this.gridSize = gridSize;
-        this.islands = new ArrayList<>();
+        this.islands = new Array<>();
     }
 
-    public BoardConfiguration(int gridSize, ArrayList<Island> islands) {
+    public BoardConfiguration(int gridSize, Array<Island> islands) {
         this.gridSize = gridSize;
         this.islands = islands;
     }
@@ -30,7 +34,8 @@ public class BoardConfiguration {
         return gridSize;
     }
 
-    public ArrayList<Island> getCells() {
+    public Array<Island> getCells() {
         return islands;
     }
+
 }

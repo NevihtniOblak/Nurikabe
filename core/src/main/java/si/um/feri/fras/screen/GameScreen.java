@@ -15,6 +15,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -145,7 +146,7 @@ public class GameScreen extends ScreenAdapter {
     private Table createGrid() {
         Table table = new Table();
         table.setFillParent(true);
-        ArrayList<Island> islands = GameManager.INSTANCE.getRandomBoardBySize(GameManager.INSTANCE.getGridSize());
+        Array<Island> islands = GameManager.INSTANCE.getRandomBoardBySize(GameManager.INSTANCE.getGridSize());
         board = new Board(GameManager.INSTANCE.getGridSize(), GameManager.INSTANCE.getGridSize(), 5f, assetManager, islands);
 
         table.add(board)

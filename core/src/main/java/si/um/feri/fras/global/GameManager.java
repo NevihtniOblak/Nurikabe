@@ -3,6 +3,7 @@ package si.um.feri.fras.global;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Json;
 
 import java.util.ArrayList;
@@ -37,7 +38,7 @@ public class GameManager {
 
     private ArrayList<Result> results = new ArrayList<>();
 
-    private ArrayList<BoardConfiguration> boards = new ArrayList<>();
+    private Array<BoardConfiguration> boards = new Array<>();
 
     private GameManager() {
         loadResults();
@@ -149,33 +150,23 @@ public class GameManager {
             String jsonData = fileHandle.readString();
 
             // Deserialize the JSON string into an ArrayList<BoardConfiguration>
-            ArrayList<BoardConfiguration> boards = json.fromJson(ArrayList.class, BoardConfiguration.class, jsonData);
-            System.out.println(boards.get(0).getCells().size());
+            boards = json.fromJson(Array.class, BoardConfiguration.class, jsonData);
+            System.out.println(boards.get(0).getCells().size);
         } else {
             System.out.println("File not found: boards/nurikabeBoards.json");
         }
     }
 
 
-    public ArrayList<BoardConfiguration> getBoards() {
+    public Array<BoardConfiguration> getBoards() {
         return boards;
     }
 
-    public ArrayList<BoardConfiguration> getBoardsBySize(int size) {
-        ArrayList<BoardConfiguration> boardsBySize = new ArrayList<>();
-        for (BoardConfiguration board : boards) {
-            if (board.getGridSize() == size) {
-                boardsBySize.add(board);
-            }
-        }
-        return boardsBySize;
-    }
-
-    public ArrayList<Island> getRandomBoardBySize(int size) {
+    public Array<Island> getRandomBoardBySize(int size) {
         System.out.println(size);
         System.out.println(boards);
         //TODO Make random
-        ArrayList<Island> islands = new ArrayList<>();
+        Array<Island> islands = new Array<>();
         for (BoardConfiguration board : boards) {
             if (board.getGridSize() == size) {
                 islands = board.getCells();

@@ -1,6 +1,5 @@
 package si.um.feri.fras;
 
-import com.badlogic.gdx.assets.AssetDescriptor;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -9,12 +8,12 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
+import com.badlogic.gdx.utils.Array;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
 
-import kotlin.Pair;
 import si.um.feri.fras.assets.AssetDescriptors;
 import si.um.feri.fras.assets.RegionNames;
 import si.um.feri.fras.global.CellState;
@@ -48,9 +47,9 @@ public class Board extends Actor {
 
     private final Sound putDotSound;
 
-    private final ArrayList<Island> islands;
+    private final Array<Island> islands;
 
-    public Board(int rows, int cols, float cellSize, AssetManager assetManager, ArrayList<Island> islands) {
+    public Board(int rows, int cols, float cellSize, AssetManager assetManager, Array<Island> islands) {
         this.rows = rows;
         this.cols = cols;
         this.cellSize = cellSize;
@@ -67,7 +66,6 @@ public class Board extends Actor {
         }
 
         //TODO Da so številke
-        System.out.println(islands);
         for (Island island : islands) {
             cellStates[island.getRow()][island.getCol()] = CellState.ISLAND;
         }
@@ -360,6 +358,8 @@ public class Board extends Actor {
                 return false;
             }
         }
+
+        System.out.println("Islands bfs check passed");
 
         return true;
 

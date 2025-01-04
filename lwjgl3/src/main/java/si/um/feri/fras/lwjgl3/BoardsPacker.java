@@ -5,6 +5,8 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import com.badlogic.gdx.utils.Array;
+
 
 import si.um.feri.fras.global.loading.BoardConfiguration;
 import si.um.feri.fras.global.loading.Island;
@@ -13,9 +15,9 @@ public class BoardsPacker {
 
     private static final String OUTPUT_DIRECTORY = "assets/boards";
 
-    private final ArrayList<BoardConfiguration> boards;
+    private final Array<BoardConfiguration> boards;
     public BoardsPacker() {
-        boards = new ArrayList<>();
+        boards = new Array<>();
     }
 
     // Method to add a board to the map
@@ -26,8 +28,14 @@ public class BoardsPacker {
     public void writeToJson(String fileName) {
         createOutputDirectory();
         Json json = new Json();
-        String jsonString = json.prettyPrint(boards);
 
+        // Copy boards without any anonymous inner class
+        Array<BoardConfiguration> boardcpy = new Array<>();
+        for (BoardConfiguration board : boards) {
+            boardcpy.add(board);
+        }
+
+        String jsonString = json.prettyPrint(boardcpy);
         File file = new File(OUTPUT_DIRECTORY, fileName);
         try (FileWriter writer = new FileWriter(file)) {
             writer.write(jsonString);
@@ -36,6 +44,7 @@ public class BoardsPacker {
             System.err.println("Failed to write boards to JSON: " + e.getMessage());
         }
     }
+
 
 
     private void createOutputDirectory() {
@@ -52,14 +61,17 @@ public class BoardsPacker {
     public static void main(String[] args) {
         BoardsPacker boardsPacker = new BoardsPacker();
 
-        boardsPacker.addBoard(new BoardConfiguration(5, new ArrayList<Island>() {{
-            add(new Island(0, 0, 1));
-            add(new Island(1, 1, 2));
-            add(new Island(1, 3, 2));
-            add(new Island(3, 2, 1));
-            add(new Island(4, 0, 1));
-            add(new Island(4, 4, 1));
-        }}));
+        Array<Island> islands = new Array<>();
+        islands.add(new Island(0, 0, 1));
+        islands.add(new Island(1, 1, 2));
+        islands.add(new Island(1, 3, 2));
+        islands.add(new Island(3, 2, 1));
+        islands.add(new Island(4, 0, 1));
+        islands.add(new Island(4, 4, 1));
+        boardsPacker.addBoard(new BoardConfiguration(5, islands));
+
+        islands.clear();
+
 
 
         // Save all boards to a JSON file
