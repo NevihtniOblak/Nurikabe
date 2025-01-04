@@ -58,3 +58,8 @@ Igralna površina (mreža), črn kvadrat, bel kvadrat z piko, števec časa
 ### Dodal timer
 ### Dodal glasbo
 ### Dodal check solution gumb (zaenkrat predpostavlja da je rešitev vedno pravilna), ki shrani rezultat igre
+
+# 3.1.2024
+### Implementiral BoardLoader, ki omogoča da definiramo igralne plošče vnaprej in jih shranimo v JSON
+### Dodal izris vnaprej določenih igralnih plošč in izris otokov
+### Delno implementiral validacijo rešitve
