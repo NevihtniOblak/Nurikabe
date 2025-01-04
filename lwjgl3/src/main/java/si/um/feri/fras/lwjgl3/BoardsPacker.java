@@ -29,13 +29,7 @@ public class BoardsPacker {
         createOutputDirectory();
         Json json = new Json();
 
-        // Copy boards without any anonymous inner class
-        Array<BoardConfiguration> boardcpy = new Array<>();
-        for (BoardConfiguration board : boards) {
-            boardcpy.add(board);
-        }
-
-        String jsonString = json.prettyPrint(boardcpy);
+        String jsonString = json.prettyPrint(boards);
         File file = new File(OUTPUT_DIRECTORY, fileName);
         try (FileWriter writer = new FileWriter(file)) {
             writer.write(jsonString);
@@ -70,8 +64,12 @@ public class BoardsPacker {
         islands.add(new Island(4, 4, 1));
         boardsPacker.addBoard(new BoardConfiguration(5, islands));
 
-        islands.clear();
-
+        Array<Island> islands2 = new Array<>();
+        islands2.add(new Island(0, 3, 2));
+        islands2.add(new Island(1, 0, 3));
+        islands2.add(new Island(3, 4, 5));
+        islands2.add(new Island(4, 2, 1));
+        boardsPacker.addBoard(new BoardConfiguration(5, islands2));
 
 
         // Save all boards to a JSON file

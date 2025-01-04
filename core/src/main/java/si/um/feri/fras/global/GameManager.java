@@ -7,6 +7,7 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Json;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 import si.um.feri.fras.global.loading.BoardConfiguration;
 import si.um.feri.fras.global.loading.Island;
@@ -162,18 +163,30 @@ public class GameManager {
         return boards;
     }
 
-    public Array<Island> getRandomBoardBySize(int size) {
-        System.out.println(size);
-        System.out.println(boards);
-        //TODO Make random
-        Array<Island> islands = new Array<>();
+    public Array<BoardConfiguration> getBoardsBySize(int size) {
+        Array<BoardConfiguration> boardsBySize = new Array<>();
         for (BoardConfiguration board : boards) {
             if (board.getGridSize() == size) {
-                islands = board.getCells();
+                boardsBySize.add(board);
             }
         }
+        return boardsBySize;
+    }
 
-        return islands;
+    public Array<Island> getRandomBoardBySize(int size) {
+        Array<BoardConfiguration> matchingBoards = getBoardsBySize(size);
+
+        if (matchingBoards.size > 0) {
+            Random rand = new Random();
+            int randomIndex = rand.nextInt(matchingBoards.size);
+
+            BoardConfiguration randomBoard = matchingBoards.get(randomIndex);
+
+            return randomBoard.getCells();
+        } else {
+            System.out.println("No boards found with grid size: " + size);
+            return new Array<>();
+        }
     }
 
 }
