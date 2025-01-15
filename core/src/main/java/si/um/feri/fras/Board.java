@@ -17,6 +17,7 @@ import java.util.Queue;
 import si.um.feri.fras.assets.AssetDescriptors;
 import si.um.feri.fras.assets.RegionNames;
 import si.um.feri.fras.global.CellState;
+import si.um.feri.fras.global.ColorTheme;
 import si.um.feri.fras.global.GameManager;
 import si.um.feri.fras.global.loading.Island;
 
@@ -42,6 +43,50 @@ public class Board extends Actor {
     private final TextureRegion island8Texture;
     private final TextureRegion island9Texture;
     private final TextureRegion island10Texture;
+
+    //MAGMA
+
+    private final TextureRegion neutralMagmaTexture;
+    private final TextureRegion markedMagmaTexture;
+    private final TextureRegion liquidMagmaTexture;
+    private final TextureRegion island1TextureMagma;
+    private final TextureRegion island2TextureMagma;
+    private final TextureRegion island3TextureMagma;
+    private final TextureRegion island4TextureMagma;
+    private final TextureRegion island5TextureMagma;
+    private final TextureRegion island6TextureMagma;
+    private final TextureRegion island7TextureMagma;
+    private final TextureRegion island8TextureMagma;
+    private final TextureRegion island9TextureMagma;
+    private final TextureRegion island10TextureMagma;
+
+    //AQUA
+
+    private final TextureRegion neutralAquaTexture;
+
+    private final TextureRegion liquidAquaTexture;
+
+    private final TextureRegion markedAquaTexture;
+
+    private final TextureRegion island1TextureAqua;
+
+    private final TextureRegion island2TextureAqua;
+
+    private final TextureRegion island3TextureAqua;
+
+    private final TextureRegion island4TextureAqua;
+
+    private final TextureRegion island5TextureAqua;
+
+    private final TextureRegion island6TextureAqua;
+
+    private final TextureRegion island7TextureAqua;
+
+    private final TextureRegion island8TextureAqua;
+
+    private final TextureRegion island9TextureAqua;
+
+    private final TextureRegion island10TextureAqua;
 
     private final Sound putBlackSound;
 
@@ -70,10 +115,10 @@ public class Board extends Actor {
             cellStates[island.getRow()][island.getCol()] = CellState.ISLAND;
         }
 
+        //Classic
         neutralCellTexture = gameplayAtlas.findRegion(RegionNames.TILE_NEUTRAL);
         blackCellTexture = gameplayAtlas.findRegion(RegionNames.TILE_BLACK);
         markedCellTexture = gameplayAtlas.findRegion(RegionNames.TILE_MARKED);
-
         island1Texture = gameplayAtlas.findRegion(RegionNames.TILE_1);
         island2Texture = gameplayAtlas.findRegion(RegionNames.TILE_2);
         island3Texture = gameplayAtlas.findRegion(RegionNames.TILE_3);
@@ -84,6 +129,34 @@ public class Board extends Actor {
         island8Texture = gameplayAtlas.findRegion(RegionNames.TILE_8);
         island9Texture = gameplayAtlas.findRegion(RegionNames.TILE_9);
         island10Texture = gameplayAtlas.findRegion(RegionNames.TILE_10);
+        //Magma
+        neutralMagmaTexture = gameplayAtlas.findRegion(RegionNames.TILE_MAGMA_NEUTRAL);
+        markedMagmaTexture = gameplayAtlas.findRegion(RegionNames.TILE_MAGMA_MARKED);
+        liquidMagmaTexture = gameplayAtlas.findRegion(RegionNames.TILE_MAGMA_LIQUID);
+        island1TextureMagma = gameplayAtlas.findRegion(RegionNames.TILE_MAGMA_1);
+        island2TextureMagma = gameplayAtlas.findRegion(RegionNames.TILE_MAGMA_2);
+        island3TextureMagma = gameplayAtlas.findRegion(RegionNames.TILE_MAGMA_3);
+        island4TextureMagma = gameplayAtlas.findRegion(RegionNames.TILE_MAGMA_4);
+        island5TextureMagma = gameplayAtlas.findRegion(RegionNames.TILE_MAGMA_5);
+        island6TextureMagma = gameplayAtlas.findRegion(RegionNames.TILE_MAGMA_6);
+        island7TextureMagma = gameplayAtlas.findRegion(RegionNames.TILE_MAGMA_7);
+        island8TextureMagma = gameplayAtlas.findRegion(RegionNames.TILE_MAGMA_8);
+        island9TextureMagma = gameplayAtlas.findRegion(RegionNames.TILE_MAGMA_9);
+        island10TextureMagma = gameplayAtlas.findRegion(RegionNames.TILE_MAGMA_10);
+        //Aqua
+        neutralAquaTexture = gameplayAtlas.findRegion(RegionNames.TILE_WATER_NEUTRAL);
+        liquidAquaTexture = gameplayAtlas.findRegion(RegionNames.TILE_WATER_LIQUID);
+        markedAquaTexture = gameplayAtlas.findRegion(RegionNames.TILE_WATER_MARKED);
+        island1TextureAqua = gameplayAtlas.findRegion(RegionNames.TILE_WATER_1);
+        island2TextureAqua = gameplayAtlas.findRegion(RegionNames.TILE_WATER_2);
+        island3TextureAqua = gameplayAtlas.findRegion(RegionNames.TILE_WATER_3);
+        island4TextureAqua = gameplayAtlas.findRegion(RegionNames.TILE_WATER_4);
+        island5TextureAqua = gameplayAtlas.findRegion(RegionNames.TILE_WATER_5);
+        island6TextureAqua = gameplayAtlas.findRegion(RegionNames.TILE_WATER_6);
+        island7TextureAqua = gameplayAtlas.findRegion(RegionNames.TILE_WATER_7);
+        island8TextureAqua = gameplayAtlas.findRegion(RegionNames.TILE_WATER_8);
+        island9TextureAqua = gameplayAtlas.findRegion(RegionNames.TILE_WATER_9);
+        island10TextureAqua = gameplayAtlas.findRegion(RegionNames.TILE_WATER_10);
 
         putBlackSound = assetManager.get(AssetDescriptors.PUT_BLACK_SOUND_2);
         putBlackSound.setVolume(1,1f);
@@ -121,21 +194,64 @@ public class Board extends Actor {
                 CellState cellState = cellStates[row][col];  // Assuming cellStates[row][col] is not null
 
                 // Determine the texture based on the cell's state
-                switch (cellState) {
-                    case NEUTRAL:
-                        cellTexture = neutralCellTexture;
-                        break;
-                    case BLACK:
-                        cellTexture = blackCellTexture;
-                        break;
-                    case MARKED:
-                        cellTexture = markedCellTexture;
-                        break;
-                    case ISLAND:
-                        cellTexture = getIslandTexture(row,col);
-                        break;
-                    default:
-                        throw new IllegalStateException("Unknown cell state: " + cellState);
+                ColorTheme colorTheme = GameManager.INSTANCE.getColorTheme();
+
+                if(colorTheme == ColorTheme.BASIC){
+                    switch (cellState) {
+                        case NEUTRAL:
+                            cellTexture = neutralCellTexture;
+                            break;
+                        case BLACK:
+                            cellTexture = blackCellTexture;
+                            break;
+                        case MARKED:
+                            cellTexture = markedCellTexture;
+                            break;
+                        case ISLAND:
+                            cellTexture = getIslandTexture(row,col);
+                            break;
+                        default:
+                            throw new IllegalStateException("Unknown cell state: " + cellState);
+                    }
+                }
+                else if(colorTheme == ColorTheme.MAGMA){
+                    switch (cellState) {
+                        case NEUTRAL:
+                            cellTexture = neutralMagmaTexture;
+                            break;
+                        case BLACK:
+                            cellTexture = liquidMagmaTexture;
+                            break;
+                        case MARKED:
+                            cellTexture = markedMagmaTexture;
+                            break;
+                        case ISLAND:
+                            cellTexture = getIslandTexture(row,col);
+                            break;
+                        default:
+                            throw new IllegalStateException("Unknown cell state: " + cellState);
+                    }
+                }
+                else if(colorTheme == ColorTheme.AQUA){
+                    switch (cellState) {
+                        case NEUTRAL:
+                            cellTexture = neutralAquaTexture;
+                            break;
+                        case BLACK:
+                            cellTexture = liquidAquaTexture;
+                            break;
+                        case MARKED:
+                            cellTexture = markedAquaTexture;
+                            break;
+                        case ISLAND:
+                            cellTexture = getIslandTexture(row,col);
+                            break;
+                        default:
+                            throw new IllegalStateException("Unknown cell state: " + cellState);
+                    }
+                }
+                else{
+                    cellTexture = null;
                 }
 
                 // Draw the cell with the appropriate texture
@@ -154,27 +270,82 @@ public class Board extends Actor {
         for (Island island : islands) {
             if (island.getRow() == row && island.getCol() == col) {
                 int islandNumber = island.getIsland();
-                switch (islandNumber){
-                    case 1:
-                        return island1Texture;
-                    case 2:
-                        return island2Texture;
-                    case 3:
-                        return island3Texture;
-                    case 4:
-                        return island4Texture;
-                    case 5:
-                        return island5Texture;
-                    case 6:
-                        return island6Texture;
-                    case 7:
-                        return island7Texture;
-                    case 8:
-                        return island8Texture;
-                    case 9:
-                        return island9Texture;
-                    case 10:
-                        return island10Texture;
+                ColorTheme colorTheme = GameManager.INSTANCE.getColorTheme();
+
+                if(colorTheme == ColorTheme.BASIC){
+                    switch (islandNumber){
+                        case 1:
+                            return island1Texture;
+                        case 2:
+                            return island2Texture;
+                        case 3:
+                            return island3Texture;
+                        case 4:
+                            return island4Texture;
+                        case 5:
+                            return island5Texture;
+                        case 6:
+                            return island6Texture;
+                        case 7:
+                            return island7Texture;
+                        case 8:
+                            return island8Texture;
+                        case 9:
+                            return island9Texture;
+                        case 10:
+                            return island10Texture;
+                    }
+                }
+                else if(colorTheme == ColorTheme.MAGMA){
+                    switch (islandNumber){
+                        case 1:
+                            return island1TextureMagma;
+                        case 2:
+                            return island2TextureMagma;
+                        case 3:
+                            return island3TextureMagma;
+                        case 4:
+                            return island4TextureMagma;
+                        case 5:
+                            return island5TextureMagma;
+                        case 6:
+                            return island6TextureMagma;
+                        case 7:
+                            return island7TextureMagma;
+                        case 8:
+                            return island8TextureMagma;
+                        case 9:
+                            return island9TextureMagma;
+                        case 10:
+                            return island10TextureMagma;
+                    }
+                }
+                else if(colorTheme == ColorTheme.AQUA){
+                    switch (islandNumber){
+                        case 1:
+                            return island1TextureAqua;
+                        case 2:
+                            return island2TextureAqua;
+                        case 3:
+                            return island3TextureAqua;
+                        case 4:
+                            return island4TextureAqua;
+                        case 5:
+                            return island5TextureAqua;
+                        case 6:
+                            return island6TextureAqua;
+                        case 7:
+                            return island7TextureAqua;
+                        case 8:
+                            return island8TextureAqua;
+                        case 9:
+                            return island9TextureAqua;
+                        case 10:
+                            return island10TextureAqua;
+                    }
+                }
+                else{
+                    return null;
                 }
             }
         }

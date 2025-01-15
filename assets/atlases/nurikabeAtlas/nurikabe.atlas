@@ -6,119 +6,224 @@ filter: Nearest, Nearest
 repeat: none
 1
   rotate: false
-  xy: 630, 890
+  xy: 630, 920
   size: 100, 100
   orig: 100, 100
   offset: 0, 0
   index: -1
 10
   rotate: false
-  xy: 630, 482
+  xy: 630, 512
   size: 100, 100
   orig: 100, 100
   offset: 0, 0
   index: -1
 2
   rotate: false
-  xy: 630, 788
+  xy: 630, 818
   size: 100, 100
   orig: 100, 100
   offset: 0, 0
   index: -1
 3
   rotate: false
-  xy: 732, 890
+  xy: 732, 920
   size: 100, 100
   orig: 100, 100
   offset: 0, 0
   index: -1
 4
   rotate: false
-  xy: 630, 686
+  xy: 630, 716
   size: 100, 100
   orig: 100, 100
   offset: 0, 0
   index: -1
 5
   rotate: false
-  xy: 732, 788
+  xy: 732, 818
   size: 100, 100
   orig: 100, 100
   offset: 0, 0
   index: -1
 6
   rotate: false
-  xy: 834, 890
+  xy: 834, 920
   size: 100, 100
   orig: 100, 100
   offset: 0, 0
   index: -1
 7
   rotate: false
-  xy: 630, 584
+  xy: 630, 614
   size: 100, 100
   orig: 100, 100
   offset: 0, 0
   index: -1
 8
   rotate: false
-  xy: 732, 686
+  xy: 732, 716
   size: 100, 100
   orig: 100, 100
   offset: 0, 0
   index: -1
 9
   rotate: false
-  xy: 834, 788
+  xy: 834, 818
   size: 100, 100
   orig: 100, 100
   offset: 0, 0
   index: -1
 alphaBackground
   rotate: false
-  xy: 732, 584
+  xy: 732, 614
   size: 100, 100
   orig: 100, 100
   offset: 0, 0
   index: -1
 black
   rotate: false
-  xy: 834, 686
+  xy: 834, 716
   size: 100, 100
   orig: 100, 100
   offset: 0, 0
   index: -1
 classicBackground
   rotate: false
-  xy: 2, 364
+  xy: 2, 394
   size: 626, 626
   orig: 626, 626
   offset: 0, 0
   index: -1
 dragonBackground
   rotate: false
-  xy: 2, 2
+  xy: 2, 32
   size: 642, 360
   orig: 642, 360
   offset: 0, 0
   index: -1
+magma1
+  rotate: false
+  xy: 630, 410
+  size: 100, 100
+  orig: 100, 100
+  offset: 0, 0
+  index: -1
+magma10
+  rotate: false
+  xy: 646, 104
+  size: 100, 100
+  orig: 100, 100
+  offset: 0, 0
+  index: -1
+magma2
+  rotate: false
+  xy: 732, 512
+  size: 100, 100
+  orig: 100, 100
+  offset: 0, 0
+  index: -1
+magma3
+  rotate: false
+  xy: 834, 614
+  size: 100, 100
+  orig: 100, 100
+  offset: 0, 0
+  index: -1
+magma4
+  rotate: false
+  xy: 732, 410
+  size: 100, 100
+  orig: 100, 100
+  offset: 0, 0
+  index: -1
+magma5
+  rotate: false
+  xy: 834, 512
+  size: 100, 100
+  orig: 100, 100
+  offset: 0, 0
+  index: -1
+magma6
+  rotate: false
+  xy: 834, 410
+  size: 100, 100
+  orig: 100, 100
+  offset: 0, 0
+  index: -1
+magma7
+  rotate: false
+  xy: 646, 308
+  size: 100, 100
+  orig: 100, 100
+  offset: 0, 0
+  index: -1
+magma8
+  rotate: false
+  xy: 646, 206
+  size: 100, 100
+  orig: 100, 100
+  offset: 0, 0
+  index: -1
+magma9
+  rotate: false
+  xy: 748, 308
+  size: 100, 100
+  orig: 100, 100
+  offset: 0, 0
+  index: -1
+magmaLiquid
+  rotate: false
+  xy: 748, 206
+  size: 100, 100
+  orig: 100, 100
+  offset: 0, 0
+  index: -1
+magmaMarked
+  rotate: false
+  xy: 748, 104
+  size: 100, 100
+  orig: 100, 100
+  offset: 0, 0
+  index: -1
+magmaNeutral
+  rotate: false
+  xy: 850, 308
+  size: 100, 100
+  orig: 100, 100
+  offset: 0, 0
+  index: -1
 marked
   rotate: false
-  xy: 630, 380
+  xy: 850, 206
   size: 100, 100
   orig: 100, 100
   offset: 0, 0
   index: -1
 neutral
   rotate: false
-  xy: 732, 482
+  xy: 850, 104
   size: 100, 100
   orig: 100, 100
   offset: 0, 0
   index: -1
-white
+water1
   rotate: false
-  xy: 834, 584
+  xy: 646, 2
+  size: 100, 100
+  orig: 100, 100
+  offset: 0, 0
+  index: -1
+water2
+  rotate: false
+  xy: 748, 2
+  size: 100, 100
+  orig: 100, 100
+  offset: 0, 0
+  index: -1
+water3
+  rotate: false
+  xy: 850, 2
   size: 100, 100
   orig: 100, 100
   offset: 0, 0
@@ -148,6 +253,83 @@ secondaryBackground
   xy: 2, 504
   size: 612, 433
   orig: 612, 433
+  offset: 0, 0
+  index: -1
+water10
+  rotate: false
+  xy: 922, 837
+  size: 100, 100
+  orig: 100, 100
+  offset: 0, 0
+  index: -1
+water4
+  rotate: false
+  xy: 616, 837
+  size: 100, 100
+  orig: 100, 100
+  offset: 0, 0
+  index: -1
+water5
+  rotate: false
+  xy: 616, 735
+  size: 100, 100
+  orig: 100, 100
+  offset: 0, 0
+  index: -1
+water6
+  rotate: false
+  xy: 718, 837
+  size: 100, 100
+  orig: 100, 100
+  offset: 0, 0
+  index: -1
+water7
+  rotate: false
+  xy: 616, 633
+  size: 100, 100
+  orig: 100, 100
+  offset: 0, 0
+  index: -1
+water8
+  rotate: false
+  xy: 718, 735
+  size: 100, 100
+  orig: 100, 100
+  offset: 0, 0
+  index: -1
+water9
+  rotate: false
+  xy: 820, 837
+  size: 100, 100
+  orig: 100, 100
+  offset: 0, 0
+  index: -1
+waterLiquid
+  rotate: false
+  xy: 616, 531
+  size: 100, 100
+  orig: 100, 100
+  offset: 0, 0
+  index: -1
+waterMarked
+  rotate: false
+  xy: 718, 633
+  size: 100, 100
+  orig: 100, 100
+  offset: 0, 0
+  index: -1
+waterNeutral
+  rotate: false
+  xy: 820, 735
+  size: 100, 100
+  orig: 100, 100
+  offset: 0, 0
+  index: -1
+white
+  rotate: false
+  xy: 922, 735
+  size: 100, 100
+  orig: 100, 100
   offset: 0, 0
   index: -1
 
