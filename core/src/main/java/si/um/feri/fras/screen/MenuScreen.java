@@ -4,12 +4,14 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
@@ -40,6 +42,8 @@ public class MenuScreen extends ScreenAdapter {
 
     private Music menuMusic;
 
+    private BitmapFont font;
+
     public MenuScreen(FrasBoardGame game) {
         this.game = game;
         assetManager = game.getAssetManager();
@@ -49,6 +53,9 @@ public class MenuScreen extends ScreenAdapter {
     public void show() {
         viewport = new FitViewport(GameConfig.HUD_WIDTH, GameConfig.HUD_HEIGHT);
         stage = new Stage(viewport, game.getBatch());
+
+        font = assetManager.get(AssetDescriptors.MENU_FONT);
+        font.getData().setScale(2.5f);
 
         skin = assetManager.get(AssetDescriptors.UI_SKIN);
         uiAtlas = assetManager.get(AssetDescriptors.UI_ATLAS);
@@ -104,7 +111,7 @@ public class MenuScreen extends ScreenAdapter {
         Table table = new Table();
         table.defaults().pad(20);
 
-        TextureRegion backgroundRegion = gameplayAtlas.findRegion(RegionNames.BAMBOO_BACKGROUND);
+        TextureRegion backgroundRegion = gameplayAtlas.findRegion(RegionNames.CLASSIC_BACKGROUND);
         table.setBackground(new TextureRegionDrawable(backgroundRegion));
 
         /*TextButton introButton = new TextButton("Intro screen", skin);
@@ -116,6 +123,11 @@ public class MenuScreen extends ScreenAdapter {
          });
 
          */
+        Color customColor = new Color(130f / 255f, 100f / 255f, 65f / 255f, 1f); // Slightly darker version
+        Label.LabelStyle labelStyle = new Label.LabelStyle(font, customColor);
+        Label nurikabeLabel = new Label("NURIKABE", labelStyle);
+        table.top().add(nurikabeLabel).padTop(30).center().row();
+
 
 
         TextButton playButton = new TextButton("Play", skin);

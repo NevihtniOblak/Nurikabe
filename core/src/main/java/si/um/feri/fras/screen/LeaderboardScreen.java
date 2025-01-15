@@ -22,14 +22,12 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
-import java.awt.Menu;
 import java.util.ArrayList;
 
 import si.um.feri.fras.FrasBoardGame;
 import si.um.feri.fras.assets.AssetDescriptors;
 import si.um.feri.fras.assets.RegionNames;
 import si.um.feri.fras.config.GameConfig;
-import si.um.feri.fras.global.Difficulty;
 import si.um.feri.fras.global.GameManager;
 import si.um.feri.fras.global.Result;
 
@@ -93,7 +91,7 @@ public class LeaderboardScreen extends ScreenAdapter {
         mainTable.setFillParent(true);
         mainTable.defaults().pad(20);
 
-        TextureRegion backgroundRegion = gameplayAtlas.findRegion(RegionNames.DARK_BAMBOO_BACKGROUND);
+        TextureRegion backgroundRegion = gameplayAtlas.findRegion(RegionNames.SECONDARY_BACKGROUND);
         mainTable.setBackground(new TextureRegionDrawable(backgroundRegion));
 
         // Add the leaderboard table
@@ -132,7 +130,6 @@ public class LeaderboardScreen extends ScreenAdapter {
         leaderboardTable.add(new Label("Rank", skin)).padRight(20);
         leaderboardTable.add(new Label("Time", skin)).padRight(20); // Display time instead of player name
         leaderboardTable.add(new Label("Board Size", skin)).padRight(20);
-        leaderboardTable.add(new Label("Difficulty", skin)).padRight(20);
         leaderboardTable.add(new Label("Score", skin)).row();
 
         // Retrieve results and sort by score
@@ -145,7 +142,6 @@ public class LeaderboardScreen extends ScreenAdapter {
             leaderboardTable.add(new Label(String.valueOf(rank++), skin)).padRight(20);
             leaderboardTable.add(new Label(String.valueOf(result.time), skin)).padRight(20);
             leaderboardTable.add(new Label(String.valueOf(result.boardSize), skin)).padRight(20);
-            leaderboardTable.add(new Label(Difficulty.toString(result.difficulty), skin)).padRight(20);
             leaderboardTable.add(new Label(String.valueOf(result.calcScore()), skin)).padBottom(10).row();
         }
 

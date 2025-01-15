@@ -54,6 +54,12 @@ public class AssetDescriptors {
     public static final AssetDescriptor<BitmapFont> INTRO_FONT =
         new AssetDescriptor<BitmapFont>(AssetPaths.INTRO_FONT, BitmapFont.class);
 
+    public static final AssetDescriptor<BitmapFont> MENU_FONT =
+        new AssetDescriptor<BitmapFont>(AssetPaths.MENU_FONT, BitmapFont.class);
+
+
+
+
 
     private AssetDescriptors() {
     }

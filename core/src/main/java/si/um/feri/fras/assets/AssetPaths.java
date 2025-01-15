@@ -41,6 +41,8 @@ public class AssetPaths {
 
     public static final String INTRO_FONT = "assets/fonts/intro.fnt";
 
+    public static final String MENU_FONT = "assets/fonts/shogun.fnt";
+
 
 
 

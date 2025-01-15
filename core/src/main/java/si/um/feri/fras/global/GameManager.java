@@ -18,7 +18,7 @@ public class GameManager {
 
     public static final GameManager INSTANCE = new GameManager();
     private static final String GRID_SIZE_KEY = "gridSize";
-    private static final String DIFFICULTY_KEY = "difficulty";
+    private static final String COLOR_THEME_KEY = "colorTheme";
 
     private static final String MUSIC_ENABLED_KEY = "musicEnabled";
 
@@ -27,11 +27,11 @@ public class GameManager {
 
     private static final String SOUND_EFFECTS_ENABLED_KEY = "soundEffectsEnabled";
     private static final int DEFAULT_GRID_SIZE = 7;
-    private static final String DEFAULT_DIFFICULTY = "Normal";
 
+    private static final String DEFAULT_COLOR_THEME = "BASIC";
     private final Preferences PREFS;
     private int gridSize;
-    private Difficulty difficulty;
+    private ColorTheme colorTheme;
 
     private boolean musicEnabled;
 
@@ -51,9 +51,9 @@ public class GameManager {
         // Load grid size or set to default
         gridSize = PREFS.getInteger(GRID_SIZE_KEY, DEFAULT_GRID_SIZE);
 
-        // Load difficulty or set to default
-        String difficultyStr = PREFS.getString(DIFFICULTY_KEY, DEFAULT_DIFFICULTY);
-        difficulty = Difficulty.fromString(difficultyStr);
+        // Load color theme or set to default
+        String colorThemeStr = PREFS.getString(COLOR_THEME_KEY, DEFAULT_COLOR_THEME);
+         colorTheme = ColorTheme.fromString(colorThemeStr);
 
         musicEnabled = PREFS.getBoolean(MUSIC_ENABLED_KEY, DEFAULT_MUSIC_ENABLED);
         soundEffectsEnabled = PREFS.getBoolean(SOUND_EFFECTS_ENABLED_KEY, DEFAULT_SOUND_EFFECTS_ENABLED);
@@ -70,13 +70,13 @@ public class GameManager {
         PREFS.flush();
     }
 
-    public Difficulty getDifficulty() {
-        return difficulty;
+    public ColorTheme getColorTheme() {
+        return colorTheme;
     }
 
-    public void setDifficulty(Difficulty difficulty) {
-        this.difficulty = difficulty;
-        PREFS.putString(DIFFICULTY_KEY, difficulty.name());
+    public void setColorTheme(ColorTheme colorTheme) {
+        this.colorTheme = colorTheme;
+        PREFS.putString(COLOR_THEME_KEY, colorTheme.name());
         PREFS.flush();
     }
 
@@ -86,7 +86,7 @@ public class GameManager {
 
 
     public void addResult(int time){
-        results.add(new Result(time, difficulty, gridSize));
+        results.add(new Result(time, gridSize));
     }
 
     public ArrayList<Result> getResults(){

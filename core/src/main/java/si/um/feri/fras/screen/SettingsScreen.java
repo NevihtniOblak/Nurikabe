@@ -1,15 +1,15 @@
 package si.um.feri.fras.screen;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.ButtonGroup;
 import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.SelectBox;
@@ -27,7 +27,7 @@ import si.um.feri.fras.FrasBoardGame;
 import si.um.feri.fras.assets.AssetDescriptors;
 import si.um.feri.fras.assets.RegionNames;
 import si.um.feri.fras.config.GameConfig;
-import si.um.feri.fras.global.Difficulty;
+import si.um.feri.fras.global.ColorTheme;
 import si.um.feri.fras.global.GameManager;
 
 public class SettingsScreen extends ScreenAdapter {
@@ -42,6 +42,10 @@ public class SettingsScreen extends ScreenAdapter {
 
     private boolean soundEffectsEnabled;
 
+    private BitmapFont titleFont;
+
+    private BitmapFont font;
+
     public SettingsScreen(FrasBoardGame game) {
         this.game = game;
         assetManager = game.getAssetManager();
@@ -54,9 +58,12 @@ public class SettingsScreen extends ScreenAdapter {
 
         musicEnabled = GameManager.INSTANCE.isMusicEnabled();
         soundEffectsEnabled = GameManager.INSTANCE.areSoundEffectsEnabled();
+        titleFont = assetManager.get(AssetDescriptors.MENU_FONT);
+        font = assetManager.get(AssetDescriptors.PRIMARY_FONT);
 
         stage.addActor(createUi());
         Gdx.input.setInputProcessor(stage);
+
     }
 
     @Override
@@ -84,27 +91,35 @@ public class SettingsScreen extends ScreenAdapter {
 
     private Actor createUi() {
         Table table = new Table();
-        table.defaults().pad(20);
+        table.setFillParent(true);
+        table.top();
+
 
         Skin uiSkin = assetManager.get(AssetDescriptors.UI_SKIN);
         TextureAtlas gameplayAtlas = assetManager.get(AssetDescriptors.GAME_ATLAS);
 
-        TextureRegion backgroundRegion = gameplayAtlas.findRegion(RegionNames.BAMBOO_BACKGROUND);
+        TextureRegion backgroundRegion = gameplayAtlas.findRegion(RegionNames.SECONDARY_BACKGROUND);
         table.setBackground(new TextureRegionDrawable(backgroundRegion));
 
+        BitmapFont fontText = new BitmapFont(font.getData().getFontFile(), font.getRegion(), false);
+        fontText.getData().setScale(0.8f);
+        Label.LabelStyle textLabelStyle = new Label.LabelStyle();
+        textLabelStyle.font = fontText;
+        textLabelStyle.fontColor = new Color(120f / 255f, 90f / 255f, 60f / 255f, 1f);
 
         // Grid Size Label
-        Label gridSizeLabel = new Label("Grid Size:", uiSkin);
+        Label gridSizeLabel = new Label("Grid Size:", textLabelStyle);
         // Spinner for grid size (up/down arrows)
+        // Spinner for grid size (left/right arrows)
         final int minGridSize = 5;
         final int maxGridSize = 10;
         final Label gridSizeValueLabel = new Label(String.valueOf(GameManager.INSTANCE.getGridSize()), uiSkin);
-        TextButton upButton = new TextButton("▲", uiSkin);
-        TextButton downButton = new TextButton("▼", uiSkin);
+        TextButton leftButton = new TextButton("<", uiSkin);  // Left arrow
+        TextButton rightButton = new TextButton(">", uiSkin); // Right arrow
 
 
         // Up button listener
-        upButton.addListener(new ClickListener() {
+        rightButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 int currentGridSize = Integer.parseInt(gridSizeValueLabel.getText().toString());
@@ -115,7 +130,7 @@ public class SettingsScreen extends ScreenAdapter {
         });
 
         // Down button listener
-        downButton.addListener(new ClickListener() {
+        leftButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 int currentGridSize = Integer.parseInt(gridSizeValueLabel.getText().toString());
@@ -125,18 +140,18 @@ public class SettingsScreen extends ScreenAdapter {
             }
         });
 
-        //Difficulity label
-        Label difficultyLabel = new Label("Difficulty:", uiSkin);
-        SelectBox<String> difficultySelectBox = new SelectBox<>(uiSkin);
-        difficultySelectBox.setItems("Easy", "Normal", "Hard");
-        difficultySelectBox.setSelected(Difficulty.toString(GameManager.INSTANCE.getDifficulty()));
+        //Color theme label
+        Label colorThemeLabel = new Label("Color theme:", textLabelStyle);
+        SelectBox<String> colorThemeSelectBox = new SelectBox<>(uiSkin);
+        colorThemeSelectBox.setItems("BASIC", "AQUA", "MAGMA");
+        colorThemeSelectBox.setSelected(GameManager.INSTANCE.getColorTheme().name());
 
 
-        Label musicLabel = new Label("Music:", uiSkin);
+        Label musicLabel = new Label("Music:", textLabelStyle);
         CheckBox musicCheckBox = new CheckBox("", uiSkin);
         musicCheckBox.setChecked(musicEnabled);
 
-        Label soundEffectsLabel = new Label("Sound Effects:", uiSkin);
+        Label soundEffectsLabel = new Label("Sound Effects:", textLabelStyle);
         CheckBox soundEffectsCheckBox = new CheckBox("", uiSkin);
         soundEffectsCheckBox.setChecked(soundEffectsEnabled);
 
@@ -164,21 +179,16 @@ public class SettingsScreen extends ScreenAdapter {
             public void clicked(InputEvent event, float x, float y) {
 
                 int selectedGridSize = Integer.parseInt(gridSizeValueLabel.getText().toString());
-                String selectedDifficulty = difficultySelectBox.getSelected();
-                Difficulty difficulty = Difficulty.fromString(selectedDifficulty);
+                String selectedColorTheme = colorThemeSelectBox.getSelected();
+                ColorTheme colorTheme = ColorTheme.fromString(selectedColorTheme);
 
-                // Use GameManager to save the grid size and difficulty
+                // Use GameManager to save the grid size and color theme
                 GameManager.INSTANCE.setGridSize(selectedGridSize);
-                GameManager.INSTANCE.setDifficulty(difficulty);
+                GameManager.INSTANCE.setColorTheme(colorTheme);
                 GameManager.INSTANCE.setMusicEnabled(musicEnabled);
                 GameManager.INSTANCE.setSoundEffectsEnabled(soundEffectsEnabled);
-
-                // Optional: Add logic to update the game in real-time if necessary
-                System.out.println("Grid size updated to: " + selectedGridSize);
-                System.out.println("Difficulty updated to: " + selectedDifficulty);
             }
         });
-
 
 
         // Back Button
@@ -191,22 +201,35 @@ public class SettingsScreen extends ScreenAdapter {
         });
 
 
+        BitmapFont fontTitle = new BitmapFont(titleFont.getData().getFontFile(), titleFont.getRegion(), false);
+        fontTitle.getData().setScale(1.5f);
+        Label.LabelStyle titleLabelStyle = new Label.LabelStyle();
+        titleLabelStyle.font = fontTitle;
+        titleLabelStyle.fontColor = new Color(105f / 255f, 80f / 255f, 50f / 255f, 1f);
+        Label settingsLabel = new Label("Settings", titleLabelStyle);
+        table.add(settingsLabel).padTop(20).padBottom(70).row();
+
+
 
         // Table layout for the spinner
         Table spinnerTable = new Table();
-        spinnerTable.add(downButton).padRight(10);
+        spinnerTable.add(leftButton).padRight(10);
         spinnerTable.add(gridSizeValueLabel).padRight(10);
-        spinnerTable.add(upButton);
+        spinnerTable.add(rightButton);
+
+        Table buttonsTable = new Table();
+        buttonsTable.add(applyButton).padRight(10);
+        buttonsTable.add(backButton);
+        buttonsTable.center().bottom().padBottom(40);
 
         // Content Table
         Table contentTable = new Table(uiSkin);
-
-        contentTable.add(new Label("Settings", uiSkin)).padBottom(50).colspan(2).row();
+        contentTable.center();
         contentTable.add(gridSizeLabel).padBottom(20);
         contentTable.add(spinnerTable).padBottom(20).row();
 
-        contentTable.add(difficultyLabel).padBottom(20);
-        contentTable.add(difficultySelectBox).padBottom(20).row();
+        contentTable.add(colorThemeLabel).padBottom(20);
+        contentTable.add(colorThemeSelectBox).padBottom(20).row();
 
         contentTable.add(musicLabel).padBottom(20);
         contentTable.add(musicCheckBox).padBottom(20).row();
@@ -214,13 +237,12 @@ public class SettingsScreen extends ScreenAdapter {
         contentTable.add(soundEffectsLabel).padBottom(20);
         contentTable.add(soundEffectsCheckBox).padBottom(20).row();
 
-        contentTable.add(applyButton).width(100).padBottom(20).colspan(2).row();
-        contentTable.add(backButton).width(100).colspan(2);
+        // Make the checkboxes for music and sound effects bigger
+        musicCheckBox.getImage().setScale(2f);
+        soundEffectsCheckBox.getImage().setScale(2f);
 
-
-        table.add(contentTable);
-        table.center();
-        table.setFillParent(true);
+        table.add(contentTable).row();
+        table.add(buttonsTable).expand().fillY().row(); // Buttons table stretches to take all vertical space, aligns to bottom
         table.pack();
 
         return table;

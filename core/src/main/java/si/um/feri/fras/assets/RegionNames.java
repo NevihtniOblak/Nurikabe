@@ -22,6 +22,14 @@ public class RegionNames {
     public static final String ALPHA_BACKGROUND = "alphaBackground";
 
     public static final String DARK_BAMBOO_BACKGROUND = "darkBambooBackground";
+
+    public static final String CLASSIC_BACKGROUND = "classicBackground";
+
+    public static final String SECONDARY_BACKGROUND = "secondaryBackground";
+
+    public static final String DRAGON_BACKGROUND = "dragonBackground";
+
+    public static final String WAVES_BACKGROUND = "wavesBackground";
     private RegionNames() {
     }
 }

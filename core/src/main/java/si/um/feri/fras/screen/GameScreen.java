@@ -5,15 +5,20 @@ import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
@@ -25,6 +30,7 @@ import java.util.ArrayList;
 import si.um.feri.fras.Board;
 import si.um.feri.fras.FrasBoardGame;
 import si.um.feri.fras.assets.AssetDescriptors;
+import si.um.feri.fras.assets.RegionNames;
 import si.um.feri.fras.config.GameConfig;
 import si.um.feri.fras.global.GameManager;
 import si.um.feri.fras.global.loading.BoardConfiguration;
@@ -53,6 +59,8 @@ public class GameScreen extends ScreenAdapter {
 
     private Board board;
 
+    private BitmapFont timerFont;
+
     public GameScreen(FrasBoardGame game) {
         this.game = game;
         assetManager = game.getAssetManager();
@@ -77,6 +85,8 @@ public class GameScreen extends ScreenAdapter {
             }
             gameMusic.play();
         }
+
+        timerFont = assetManager.get(AssetDescriptors.PRIMARY_FONT);
 
 
         gameplayStage.addActor(createGrid());
@@ -133,7 +143,7 @@ public class GameScreen extends ScreenAdapter {
     private Actor createBackButton() {
         final TextButton backButton = new TextButton("Back", skin);
         backButton.setWidth(100);
-        backButton.setPosition(GameConfig.HUD_WIDTH / 2f - backButton.getWidth() / 2f, 20f);
+        backButton.setPosition(GameConfig.HUD_WIDTH / 2f - backButton.getWidth() / 2f + 70f, 10f);
         backButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -145,6 +155,9 @@ public class GameScreen extends ScreenAdapter {
 
     private Table createGrid() {
         Table table = new Table();
+        TextureRegion backgroundRegion = gameplayAtlas.findRegion(RegionNames.WAVES_BACKGROUND);
+        table.setBackground(new TextureRegionDrawable(backgroundRegion));
+
         table.setFillParent(true);
         Array<Island> islands = GameManager.INSTANCE.getRandomBoardBySize(GameManager.INSTANCE.getGridSize());
         board = new Board(GameManager.INSTANCE.getGridSize(), GameManager.INSTANCE.getGridSize(), 5f, assetManager, islands);
@@ -154,6 +167,8 @@ public class GameScreen extends ScreenAdapter {
             .align(Align.center)
             .expand();
         //table.setDebug(true); // Remove this line once you're satisfied with the layout
+        table.padBottom(5f); // Add padding to the bottom to make space for the HUD
+
 
         return table; // Return the configured table
     }
@@ -161,15 +176,36 @@ public class GameScreen extends ScreenAdapter {
     private Actor createCheckResultButton() {
         final TextButton checkResultButton = new TextButton("Check Result", skin);
         checkResultButton.setWidth(150);
-        checkResultButton.setPosition(GameConfig.HUD_WIDTH / 2f - checkResultButton.getWidth() / 2f, 100f);  // Position above back button
+        checkResultButton.setPosition(GameConfig.HUD_WIDTH / 2f - checkResultButton.getWidth() / 2f - 70f, 10f);  // Position above back button
         checkResultButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                // Stop the timer when the button is clicked
-                if(board.validateSolution()) {
+                if (board.validateSolution()) {
                     timerRunning = false;
-                    GameManager.INSTANCE.addResult((int)timer);
+                    GameManager.INSTANCE.addResult((int) timer);
 
+                    // Set the input processor to hudStage to block gameplayStage
+                    Gdx.input.setInputProcessor(hudStage);
+
+                    // Create a victory dialog
+                    Dialog victoryDialog = new Dialog("Victory", skin) {
+                        @Override
+                        protected void result(Object object) {
+                            if ("reset".equals(object)) {
+                                // Reset the game
+                                game.setScreen(new GameScreen(game));
+                            } else if ("menu".equals(object)) {
+                                // Go to the main menu
+                                game.setScreen(new MenuScreen(game));
+                            }
+                        }
+                    };
+
+                    victoryDialog.text("Congratulations! You have won the game.");
+                    victoryDialog.button("Reset", "reset");      // Reset button
+                    victoryDialog.button("Main Menu", "menu");  // Main Menu button
+                    victoryDialog.setModal(true);               // Block input to gameplayStage
+                    victoryDialog.show(hudStage);
                 }
             }
         });
@@ -177,16 +213,27 @@ public class GameScreen extends ScreenAdapter {
     }
 
 
-    private Label createTimer(){
-        // Create the timer label
-        Label timerLabel;
+
+    private Label createTimer() {
+        // Create a new BitmapFont instance for this label
+        BitmapFont newfont = new BitmapFont(timerFont.getData().getFontFile(), timerFont.getRegion(), false);
+        newfont.getData().setScale(0.7f);  // Scale this font instance only
+
+        // Create a LabelStyle using the new font
         Label.LabelStyle timerStyle = new Label.LabelStyle();
-        timerStyle.font = skin.getFont("font");  // Ensure you have a default font in the skin
-        timerLabel = new Label("Time: 0s", timerStyle);
+        timerStyle.font = newfont;
+
+        // Set the font color to a darker shade
+        timerStyle.fontColor = new Color(0.2f, 0.2f, 0.2f, 1); // Dark gray (RGBA format)
+
+        // Create the timer label
+        Label timerLabel = new Label("Time: 0s", timerStyle);
         timerLabel.setPosition(GameConfig.HUD_WIDTH - 120, GameConfig.HUD_HEIGHT - 30); // Top right corner
 
         return timerLabel;
     }
+
+
 
     private void updateTimer(float delta) {
         if (timerRunning) {

@@ -56,6 +56,7 @@ public class FrasBoardGame extends Game {
         assetManager.load(AssetDescriptors.GAME_MUSIC);
         assetManager.load(AssetDescriptors.PUT_BLACK_SOUND_2);
         assetManager.load(AssetDescriptors.PUT_DOT_SOUND_2);
+        assetManager.load(AssetDescriptors.MENU_FONT);
 
         assetManager.finishLoading();
 

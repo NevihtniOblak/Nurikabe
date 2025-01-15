@@ -6,120 +6,160 @@ filter: Nearest, Nearest
 repeat: none
 1
   rotate: false
-  xy: 504, 904
+  xy: 630, 890
   size: 100, 100
   orig: 100, 100
   offset: 0, 0
   index: -1
 10
   rotate: false
-  xy: 810, 904
+  xy: 630, 482
   size: 100, 100
   orig: 100, 100
   offset: 0, 0
   index: -1
 2
   rotate: false
-  xy: 504, 802
+  xy: 630, 788
   size: 100, 100
   orig: 100, 100
   offset: 0, 0
   index: -1
 3
   rotate: false
-  xy: 606, 904
+  xy: 732, 890
   size: 100, 100
   orig: 100, 100
   offset: 0, 0
   index: -1
 4
   rotate: false
-  xy: 504, 700
+  xy: 630, 686
   size: 100, 100
   orig: 100, 100
   offset: 0, 0
   index: -1
 5
   rotate: false
-  xy: 606, 802
+  xy: 732, 788
   size: 100, 100
   orig: 100, 100
   offset: 0, 0
   index: -1
 6
   rotate: false
-  xy: 708, 904
+  xy: 834, 890
   size: 100, 100
   orig: 100, 100
   offset: 0, 0
   index: -1
 7
   rotate: false
-  xy: 504, 598
+  xy: 630, 584
   size: 100, 100
   orig: 100, 100
   offset: 0, 0
   index: -1
 8
   rotate: false
-  xy: 606, 700
+  xy: 732, 686
   size: 100, 100
   orig: 100, 100
   offset: 0, 0
   index: -1
 9
   rotate: false
-  xy: 708, 802
+  xy: 834, 788
   size: 100, 100
   orig: 100, 100
   offset: 0, 0
   index: -1
 alphaBackground
   rotate: false
-  xy: 504, 496
+  xy: 732, 584
   size: 100, 100
   orig: 100, 100
-  offset: 0, 0
-  index: -1
-bambooBackground
-  rotate: false
-  xy: 2, 504
-  size: 500, 500
-  orig: 500, 500
   offset: 0, 0
   index: -1
 black
   rotate: false
-  xy: 606, 598
+  xy: 834, 686
   size: 100, 100
   orig: 100, 100
   offset: 0, 0
   index: -1
-darkBambooBackground
+classicBackground
+  rotate: false
+  xy: 2, 364
+  size: 626, 626
+  orig: 626, 626
+  offset: 0, 0
+  index: -1
+dragonBackground
   rotate: false
   xy: 2, 2
-  size: 500, 500
-  orig: 500, 500
+  size: 642, 360
+  orig: 642, 360
   offset: 0, 0
   index: -1
 marked
   rotate: false
-  xy: 708, 700
+  xy: 630, 380
   size: 100, 100
   orig: 100, 100
   offset: 0, 0
   index: -1
 neutral
   rotate: false
-  xy: 810, 802
+  xy: 732, 482
   size: 100, 100
   orig: 100, 100
   offset: 0, 0
   index: -1
 white
   rotate: false
-  xy: 912, 904
+  xy: 834, 584
   size: 100, 100
   orig: 100, 100
+  offset: 0, 0
+  index: -1
+
+nurikabe2.png
+size: 1024, 1024
+format: RGBA8888
+filter: Nearest, Nearest
+repeat: none
+bambooBackground
+  rotate: false
+  xy: 2, 2
+  size: 500, 500
+  orig: 500, 500
+  offset: 0, 0
+  index: -1
+darkBambooBackground
+  rotate: false
+  xy: 504, 2
+  size: 500, 500
+  orig: 500, 500
+  offset: 0, 0
+  index: -1
+secondaryBackground
+  rotate: false
+  xy: 2, 504
+  size: 612, 433
+  orig: 612, 433
+  offset: 0, 0
+  index: -1
+
+nurikabe3.png
+size: 1024, 512
+format: RGBA8888
+filter: Nearest, Nearest
+repeat: none
+wavesBackground
+  rotate: false
+  xy: 2, 2
+  size: 540, 360
+  orig: 540, 360
   offset: 0, 0
   index: -1
